@@ -1,0 +1,15 @@
+# Ignore the build and lib dirs
+build/*
+!build/.gitkeep
+lib/*
+
+# Ignore bandit data
+data/*
+!data/.gitkeep
+
+# Ignore any executables
+bin/*
+!bin/.gitkeep
+
+# Ignore Visual Code files
+.vscode/
