@@ -1,6 +1,10 @@
 # Hide and Seek
 This project creates a competitive multi-agent environment, where 2 players in each team act on a 32x32 grid.
 
+## To Do
+* Implement a field of view for the seeker (and possibly the hider)
+* Have the seeker and the hider spawn at a random position, with a distance higher than the vision range
+
 ## How to Run
 To run the code, go to a terminal, set the present working directory as K-armed_Bandits and run the following commands:
 
