@@ -43,25 +43,25 @@ void printGrid(std::vector<int> grid, Agent hider, Agent seeker) {
         for (int j=0; j<10; j++) {
 
             switch (grid[i*10 + j]) {
-                case 0:
+                case 0:         // Empty space.
                     cout << " ";
                     break;
-                case 1:
+                case 1:         // Wall.
                     cout << "#";
                     break;
-                case 2:
+                case 2:         // Hider.
                     cout << "H";
                     break;
-                case 3:
+                case 3:         // Seeker.
                     cout << "S";
                     break;
-                case 4:
+                case 4:         // Base.
                     cout << "*";
                     break;
-                case 5:
+                case 5:         // Hider at the goal position.
                     cout << "H";
                     break;
-                case 6:
+                case 6:         // Seeker at the goal position.
                     cout << "S";
                     break;
             }
