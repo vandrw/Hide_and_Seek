@@ -9,7 +9,7 @@ class Agent {
     int Y    = 0;  // Y coordinate of the agent.
     int vision = 3; // Vision range (fixed)
     int direction = 4; // Direction in which the agent previously moved and currently faces 
-    //std::vector<int> estimates;
+    std::vector<int> estimates;
     
     Agent(int t, std::vector<int> &grid);
 

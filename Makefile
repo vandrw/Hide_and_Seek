@@ -2,7 +2,7 @@ CC := g++ # This is the main compiler
 SRCDIR := src
 BUILDDIR := build
 TARGET := bin
-OUTPUT := bandit
+OUTPUT := hidenseek
 	
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))

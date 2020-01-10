@@ -10,9 +10,8 @@ int main(int argc, char **argv) {
      std::vector<int> grid(100, 0);
 
      initializeGrid(grid);
-
+     
      Agent  hider(0, grid);
-
      Agent seeker(1, grid);
 
      printSimulation(grid, hider, seeker);

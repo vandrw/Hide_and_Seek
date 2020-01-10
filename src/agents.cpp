@@ -12,7 +12,7 @@ Agent::Agent(int t, std::vector<int> &grid) {
     type = t;
     
     int x_hider, y_hider;
-    //estimates = std::vector<int> (100, 0);
+    estimates.resize(100, 0);
 
     // If placing the second agent, it should be out of the sight of the first agent
     if (type == 1){
