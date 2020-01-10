@@ -4,6 +4,6 @@
 #include "agents.h"
 
 void initializeGrid(std::vector<int> &grid);
-void printGrid(std::vector<int> grid, Agent hider, Agent seeker);
+void printGrid(std::vector<int> grid);
 
 #endif /* GRID_H */

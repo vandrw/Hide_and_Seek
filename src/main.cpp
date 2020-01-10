@@ -3,7 +3,7 @@
 #include "grid.h"
 #include "agents.h"
 #include "simulation.h"
-
+#include <exception>
 using namespace std;
 
 int main(int argc, char **argv) {
@@ -12,9 +12,10 @@ int main(int argc, char **argv) {
      initializeGrid(grid);
 
      Agent  hider(0, grid);
+
      Agent seeker(1, grid);
 
-     printGrid(grid, hider, seeker);
+     printSimulation(grid, hider, seeker);
 
      makeGame(grid, hider, seeker);
 }
