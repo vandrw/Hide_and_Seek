@@ -51,6 +51,8 @@ void makePlay(std::vector<int> grid, std::vector<double> rewards, Agent hider, A
         printSimulation(grid, hider, seeker);
     }
 
+    int flag = 0;
+    double bonus = 0; 
     for (turn = 49; turn < 200; turn ++) {
         seekerFound = hider.playTurn(epsilon, grid);
         hiderFound = seeker.playTurn(epsilon, grid);
@@ -59,13 +61,22 @@ void makePlay(std::vector<int> grid, std::vector<double> rewards, Agent hider, A
         logs << "seekerFound = " << seekerFound <<" at location X="<< seeker.getX_Coord() << ", Y="<< seeker.getY_Coord()<<"\t";
         logs << "hiderFound = "<< hiderFound <<" at location X="<<hider.getX_Coord() << ", Y="<<hider.getY_Coord()<<"\n";
 
-        if (hiderFound != 0){
+        // make the bonus 10 to reward/penalize agents
+        if (hiderFound != 0 && flag == 0){
+            flag = 1;
+            bonus = 10.0;
             hider.discovered = 1;   // hider was discovered
             seeker.discovered = 1;  // seeker has discovered the hider
         }
 
-        hider.getReward(rewards, turn, hiderFound);
-        seeker.getReward(rewards, turn, hiderFound);
+        hider.getReward(rewards, turn, bonus);
+        seeker.getReward(rewards, turn, bonus);
+
+        // set flag to -1 so the bonus will not become 10 if the hider is discovered again
+        if (flag == 1){
+            flag = -1;
+            bonus = 0;
+        }
 
         printSimulation(grid, hider, seeker);
     }

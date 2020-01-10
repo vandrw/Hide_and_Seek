@@ -53,16 +53,16 @@ void addDirection(std::vector<int> grid, std::vector<int> &grd, Agent hider, Age
         for (int j=0; j<10; j++) {
             if (grid[i*10 + j] == 2){
                 direction = hider.getDirection();
-                if ((direction == 0) && (i+1 < 10)) { grd[(i+1)*10+j] = 7;}
+                if ((direction == 0) && (i-1 < 10)) { grd[(i-1)*10+j] = 7;}
                 if ((direction == 1) && (j+1 < 10)) { grd[i*10+j+1] = 7;}
-                if ((direction == 2) && (i-1 >= 0)) { grd[(i-1)*10+j] = 7;}
+                if ((direction == 2) && (i+1 >= 0)) { grd[(i+1)*10+j] = 7;}
                 if ((direction == 3) && (j-1 >= 0)) { grd[i*10+j-1] = 7;}
             }
             if (grid[i*10 + j] == 3){
                 direction = seeker.getDirection();
-                if ((direction == 0) && (i+1 < 10)) { grd[(i+1)*10+j] = 7;}
+                if ((direction == 0) && (i-1 < 10)) { grd[(i-1)*10+j] = 7;}
                 if ((direction == 1) && (j+1 < 10)) { grd[i*10+j+1] = 7;}
-                if ((direction == 2) && (i-1 >= 0)) { grd[(i-1)*10+j] = 7;}
+                if ((direction == 2) && (i+1 >= 0)) { grd[(i+1)*10+j] = 7;}
                 if ((direction == 3) && (j-1 >= 0)) { grd[i*10+j-1] = 7;}
             }
         }

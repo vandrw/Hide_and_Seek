@@ -12,7 +12,8 @@ Agent::Agent(int t, std::vector<int> &grid) {
 
     type = t;                                  // set agent type
     direction = randIntDirection(generator);   // set random starting direction
-    estimates.resize(100, 0);                  // resize array with observed rewards
+    if (type == 0){ estimates.resize(100, 0); }                 // resize array with observed rewards
+    if (type == 1){ estimates.resize(100, 5); }
 
     int x_hider, y_hider;
 
@@ -244,15 +245,15 @@ int Agent::findAgent(std::vector<int> &grid){
     }
 }
 
-int Agent::bestDirection(){
+int Agent::bestDirection(std::vector<int> grid){
     int direction;
     double max;
     std::vector<double> values (4, 0);
 
-    if ( X-1 >= 0 ) {values[0] = estimates[(X-1)*10+Y];} else {values[0] = -10000;}
-    if ( Y+1 < 10 ) {values[1] = estimates[X*10+Y+1];} else {values[1] = -10000;}
-    if ( X+1 < 10 ) {values[2] = estimates[(X+1)*10+Y];} else {values[2] = -10000;}
-    if ( Y-1 >= 0 ) {values[3] = estimates[X*10+Y-1];} else {values[3] = -10000;}
+    if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[(X-1)*10+Y];} else {values[0] = -10000;}
+    if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y+1];} else {values[1] = -10000;}
+    if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[(X+1)*10+Y];} else {values[2] = -10000;}
+    if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y-1];} else {values[3] = -10000;}
 
     max = values[0];
     for (int i = 1; i < 4; i++){
@@ -272,7 +273,7 @@ int Agent::lookAround(std::vector<int> grid, double epsilon) {
     if (randDouble(generator) > 1-epsilon){
         return randInt(generator);
     }
-    return bestDirection();
+    return bestDirection(grid);
 }
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
@@ -281,18 +282,22 @@ int Agent::playTurn(double epsilon, std::vector<int> &grid){
     return findAgent(grid);
 }
 
-void Agent::getReward(std::vector<double> rewards, int turn, int hiderFound){
+void Agent::getReward(std::vector<double> rewards, int turn, double bonus){
     random_device generator;
-    uniform_real_distribution<double> randDouble(0, 1);
+    uniform_real_distribution<double> randDouble(-1, 1);
     double newReward;
     if (type == 0){
         // hiders get the tile reward + 1 for every turn they are not discovered 
-        // when they are discovered they also get -1 penalty only for that turn
-        newReward = rewards[X*10+Y] + randDouble(generator) + (1 - discovered) - hiderFound;
+        // hider gets penalty when it is found
+        newReward = rewards[X*10+Y] + randDouble(generator) + (1 - discovered) + bonus;
     }else{
-        // seekers get the tile reward - 1 for every turn until they dicover the hider
-        // when the hider is found, seekers get + 10 reward only for that turn
-        newReward = rewards[X*10+Y] + randDouble(generator) + (discovered - 1) + 10 * hiderFound;
+        // seekers get the tile reward - 2 for every turn until they dicover the hider
+        // seeker gets bonus when it finds the hider for the first time
+        if (discovered == 0){
+            newReward = rewards[X*10+Y] + randDouble(generator) - 2;
+        }else{
+            newReward = rewards[X*10+Y] + randDouble(generator) + bonus;
+        }
     }
     estimates[X*10+Y] += (double)(1/(turn+1)) * (newReward - estimates[X*10+Y]);
 }

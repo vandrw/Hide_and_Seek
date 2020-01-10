@@ -22,10 +22,10 @@ class Agent {
     int findAgentEast(std::vector<int> &grid);
     int findAgentWest(std::vector<int> &grid);
     int findAgent(std::vector<int> &grid);
-    int bestDirection();
+    int bestDirection(std::vector<int> grid);
     int lookAround(std::vector<int> grid, double epsilon);
     int playTurn(double epsilon, std::vector<int> &grid);
-    void getReward(std::vector<double> rewards, int turn, int hiderFound);
+    void getReward(std::vector<double> rewards, int turn, double bonus);
 
     int getX_Coord();
     int getY_Coord();
