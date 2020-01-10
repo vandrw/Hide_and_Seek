@@ -22,25 +22,66 @@ using namespace std;
 
 void initializeGrid(std::vector<int> &grid) {
     grid = { 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
-             0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
-             0, 0, 1, 1, 0, 1, 1, 0, 0, 0,
-             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-             1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
-             0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
-             1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
-             0, 0, 0, 1, 0, 0, 0, 1, 1, 1,
-             0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-             0, 0, 0, 1, 0, 0, 0, 0, 0, 0  }; 
+            0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
+            0, 0, 1, 1, 0, 1, 1, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 1, 1, 1, 0, 0,
+            1, 1, 1, 1, 0, 1, 0, 0, 0, 0,
+            0, 0, 0, 1, 0, 0, 0, 1, 1, 1,
+            0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
+            0, 0, 0, 1, 0, 0, 0, 0, 0, 0  }; 
 }
 
-void printGrid(std::vector<int> grid) {
 
-    if(grid.empty()){
+void initializeRewardsGrid(std::vector<double> &rewards) {
+    rewards = { 0,  1, -1,  1, 0,  1, -1,  1,  0,  1,
+            0,  1, -1,  3, 0,  3, -1,  1,  1, -1,
+            0,  1, -1, -1, 0, -1, -1,  1,  0,  1,
+            0,  0,  2,  1, 0,  1,  1,  0,  0,  0,
+            -1, -1, -1,  0, 0,  1,  1,  1,  0,  0,
+            2,  2,  2,  1, 1, -1, -1, -1,  1,  0,
+            -1, -1, -1, -1, 2, -1,  3,  2,  1,  1,
+            1,  1,  3, -1, 0,  1,  0, -1, -1, -1,
+            0,  0,  0,  0, 0,  0,  0,  3, -1,  3,
+            0,  0,  1, -1, 0,  0,  0,  0,  0,  0    }; 
+}
+
+void addDirection(std::vector<int> grid, std::vector<int> &grd, Agent hider, Agent seeker){
+    int direction;
+    for (int i=0; i<10; i++) {
+        for (int j=0; j<10; j++) {
+            if (grid[i*10 + j] == 2){
+                direction = hider.getDirection();
+                if ((direction == 0) && (i+1 < 10)) { grd[(i+1)*10+j] = 7;}
+                if ((direction == 1) && (j+1 < 10)) { grd[i*10+j+1] = 7;}
+                if ((direction == 2) && (i-1 >= 0)) { grd[(i-1)*10+j] = 7;}
+                if ((direction == 3) && (j-1 >= 0)) { grd[i*10+j-1] = 7;}
+            }
+            if (grid[i*10 + j] == 3){
+                direction = seeker.getDirection();
+                if ((direction == 0) && (i+1 < 10)) { grd[(i+1)*10+j] = 7;}
+                if ((direction == 1) && (j+1 < 10)) { grd[i*10+j+1] = 7;}
+                if ((direction == 2) && (i-1 >= 0)) { grd[(i-1)*10+j] = 7;}
+                if ((direction == 3) && (j-1 >= 0)) { grd[i*10+j-1] = 7;}
+            }
+        }
+    }
+}
+
+void printGrid(std::vector<int> grid, Agent hider, Agent seeker) {
+
+    std::vector<int> grd = grid;
+
+
+    if(grd.empty()){
         cout << "Grid is empty, cannot be printed!\n";
         throw std::exception();
         return;
     }
 
+    addDirection(grid, grd, hider, seeker);
+    
     for (int i=0; i<=20; i++) { cout << "_";}
 
     cout << "\n";
@@ -50,7 +91,7 @@ void printGrid(std::vector<int> grid) {
 
         for (int j=0; j<10; j++) {
 
-            switch (grid[i*10 + j]) {
+            switch (grd[i*10 + j]) {
                 case 0:             // Empty space           
                     cout << " ";
                     break;
@@ -71,6 +112,9 @@ void printGrid(std::vector<int> grid) {
                     break;
                 case 6:             // Seeker at goal position
                     cout << "S";
+                    break;
+                case 7:             // Mark the direction in which the agent looks
+                    cout << "+";
                     break;
             }
             if (j != 9) {cout << " ";}

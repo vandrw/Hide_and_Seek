@@ -8,13 +8,15 @@ using namespace std;
 
 int main(int argc, char **argv) {
      std::vector<int> grid(100, 0);
+     std::vector<double> rewards(100, 0);
 
      initializeGrid(grid);
-     
+     initializeRewardsGrid(rewards);
+
      Agent  hider(0, grid);
      Agent seeker(1, grid);
 
      printSimulation(grid, hider, seeker);
 
-     makeGame(grid, hider, seeker);
+     makeGame(grid, rewards, hider, seeker);
 }

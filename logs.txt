@@ -1,152 +1,202 @@
-Seeker start X=5, Y=0
-Turn 0	seeker_found = 0
-Turn 1	seeker_found = 0
-Turn 2	seeker_found = 0
-Turn 3	seeker_found = 0
-Turn 4	seeker_found = 0
-Turn 5	seeker_found = 0
-Turn 6	seeker_found = 0
-Turn 7	seeker_found = 0
-Turn 8	seeker_found = 0
-Turn 9	seeker_found = 0
-Turn 9	seeker_found = 0 at location X=5, Y=0	hider_found = 0 at location X=1, Y=4
-Turn 10	seeker_found = 0 at location X=5, Y=0	hider_found = 0 at location X=0, Y=4
-Turn 11	seeker_found = 0 at location X=5, Y=0	hider_found = 0 at location X=0, Y=4
-Turn 12	seeker_found = 0 at location X=5, Y=1	hider_found = 0 at location X=1, Y=4
-Turn 13	seeker_found = 0 at location X=5, Y=2	hider_found = 0 at location X=2, Y=4
-Turn 14	seeker_found = 0 at location X=5, Y=3	hider_found = 0 at location X=3, Y=4
-Turn 15	seeker_found = 0 at location X=5, Y=4	hider_found = 0 at location X=4, Y=4
-Turn 16	seeker_found = 0 at location X=5, Y=4	hider_found = 0 at location X=4, Y=4
-Turn 17	seeker_found = 0 at location X=6, Y=4	hider_found = 0 at location X=3, Y=4
-Turn 18	seeker_found = 0 at location X=7, Y=4	hider_found = 0 at location X=2, Y=4
-Turn 19	seeker_found = 0 at location X=8, Y=4	hider_found = 0 at location X=1, Y=4
-Turn 20	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=4
-Turn 21	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=4
-Turn 22	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 23	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 24	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 25	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 26	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 27	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=1, Y=3
-Turn 28	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=1, Y=3
-Turn 29	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=1, Y=3
-Turn 30	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=4
-Turn 31	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=5
-Turn 32	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 33	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 34	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 35	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 36	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 37	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 38	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 39	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 40	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 41	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=4
-Turn 42	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 43	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 44	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 45	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 46	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 47	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 48	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=4
-Turn 49	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 50	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 51	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 52	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 53	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=4
-Turn 54	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 55	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 56	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=4
-Turn 57	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 58	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 59	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 60	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 61	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 62	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=5
-Turn 63	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=0, Y=5
-Turn 64	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=0, Y=4
-Turn 65	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=0, Y=3
-Turn 66	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=0, Y=3
-Turn 67	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=4
-Turn 68	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=5
-Turn 69	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=5
-Turn 70	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=0, Y=5
-Turn 71	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=0, Y=5
-Turn 72	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=5
-Turn 73	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=5
-Turn 74	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 75	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=4
-Turn 76	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 77	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 78	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 79	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 80	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 81	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 82	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=4
-Turn 83	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 84	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 85	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=5
-Turn 86	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=5
-Turn 87	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=5
-Turn 88	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=1, Y=5
-Turn 89	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=1, Y=4
-Turn 90	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=1, Y=3
-Turn 91	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=1, Y=3
-Turn 92	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=0, Y=3
-Turn 93	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=0, Y=3
-Turn 94	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=3
-Turn 95	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=3
-Turn 96	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 97	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=4
-Turn 98	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=5
-Turn 99	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=5
-Turn 100	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=1, Y=5
-Turn 101	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=0, Y=5
-Turn 102	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=5
-Turn 103	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=1, Y=5
-Turn 104	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=1, Y=5
-Turn 105	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=1, Y=4
-Turn 106	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=3
-Turn 107	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=1, Y=3
-Turn 108	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 109	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 110	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 111	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 112	seeker_found = 0 at location X=8, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 113	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=1, Y=3
-Turn 114	seeker_found = 0 at location X=9, Y=9	hider_found = 0 at location X=0, Y=3
-Turn 115	seeker_found = 0 at location X=9, Y=8	hider_found = 0 at location X=0, Y=3
-Turn 116	seeker_found = 0 at location X=9, Y=7	hider_found = 0 at location X=1, Y=3
-Turn 117	seeker_found = 0 at location X=9, Y=6	hider_found = 0 at location X=1, Y=3
-Turn 118	seeker_found = 0 at location X=9, Y=5	hider_found = 0 at location X=0, Y=3
-Turn 119	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=3
-Turn 120	seeker_found = 0 at location X=9, Y=4	hider_found = 0 at location X=0, Y=4
-Turn 121	seeker_found = 0 at location X=8, Y=4	hider_found = 0 at location X=0, Y=5
-Turn 122	seeker_found = 0 at location X=8, Y=4	hider_found = 0 at location X=0, Y=5
-Turn 123	seeker_found = 0 at location X=8, Y=3	hider_found = 0 at location X=0, Y=5
-Turn 124	seeker_found = 0 at location X=8, Y=2	hider_found = 0 at location X=0, Y=5
-Turn 125	seeker_found = 0 at location X=8, Y=1	hider_found = 0 at location X=0, Y=4
-Turn 126	seeker_found = 0 at location X=8, Y=0	hider_found = 0 at location X=0, Y=3
-Turn 127	seeker_found = 0 at location X=8, Y=0	hider_found = 0 at location X=0, Y=3
-Turn 128	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=0, Y=3
-Turn 129	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=0, Y=3
-Turn 130	seeker_found = 0 at location X=9, Y=1	hider_found = 0 at location X=0, Y=3
-Turn 131	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=0, Y=3
-Turn 132	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=0, Y=4
-Turn 133	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=0, Y=5
-Turn 134	seeker_found = 0 at location X=9, Y=1	hider_found = 0 at location X=0, Y=5
-Turn 135	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=5
-Turn 136	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=5
-Turn 137	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=4
-Turn 138	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=3
-Turn 139	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=3
-Turn 140	seeker_found = 0 at location X=9, Y=1	hider_found = 0 at location X=1, Y=3
-Turn 141	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=1, Y=3
-Turn 142	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=0, Y=3
-Turn 143	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=0, Y=3
-Turn 144	seeker_found = 0 at location X=9, Y=1	hider_found = 0 at location X=1, Y=3
-Turn 145	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=3
-Turn 146	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=3
-Turn 147	seeker_found = 0 at location X=9, Y=0	hider_found = 0 at location X=1, Y=4
-Turn 148	seeker_found = 0 at location X=9, Y=1	hider_found = 0 at location X=1, Y=5
-Turn 149	seeker_found = 0 at location X=9, Y=2	hider_found = 0 at location X=1, Y=5
+Seeker start X=0, Y=3
+Turn 0	seekerFound = 0
+Turn 1	seekerFound = 0
+Turn 2	seekerFound = 0
+Turn 3	seekerFound = 0
+Turn 4	seekerFound = 0
+Turn 5	seekerFound = 0
+Turn 6	seekerFound = 0
+Turn 7	seekerFound = 0
+Turn 8	seekerFound = 0
+Turn 9	seekerFound = 0
+Turn 10	seekerFound = 0
+Turn 11	seekerFound = 0
+Turn 12	seekerFound = 0
+Turn 13	seekerFound = 0
+Turn 14	seekerFound = 0
+Turn 15	seekerFound = 0
+Turn 16	seekerFound = 0
+Turn 17	seekerFound = 0
+Turn 18	seekerFound = 0
+Turn 19	seekerFound = 0
+Turn 20	seekerFound = 0
+Turn 21	seekerFound = 0
+Turn 22	seekerFound = 0
+Turn 23	seekerFound = 0
+Turn 24	seekerFound = 0
+Turn 25	seekerFound = 0
+Turn 26	seekerFound = 0
+Turn 27	seekerFound = 0
+Turn 28	seekerFound = 0
+Turn 29	seekerFound = 0
+Turn 30	seekerFound = 0
+Turn 31	seekerFound = 0
+Turn 32	seekerFound = 0
+Turn 33	seekerFound = 0
+Turn 34	seekerFound = 0
+Turn 35	seekerFound = 0
+Turn 36	seekerFound = 0
+Turn 37	seekerFound = 0
+Turn 38	seekerFound = 0
+Turn 39	seekerFound = 0
+Turn 40	seekerFound = 0
+Turn 41	seekerFound = 0
+Turn 42	seekerFound = 0
+Turn 43	seekerFound = 0
+Turn 44	seekerFound = 0
+Turn 45	seekerFound = 0
+Turn 46	seekerFound = 0
+Turn 47	seekerFound = 0
+Turn 48	seekerFound = 0
+Turn 49	seekerFound = 0
+Turn 49	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 50	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 51	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 52	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 53	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 54	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 55	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 56	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 57	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 58	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 59	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 60	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 61	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 62	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 63	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 64	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 65	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 66	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 67	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 68	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 69	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 70	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 71	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 72	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 73	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 74	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 75	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 76	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 77	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 78	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 79	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 80	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 81	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 82	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 83	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 84	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 85	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 86	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 87	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 88	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 89	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 90	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 91	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 92	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 93	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 94	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 95	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 96	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 97	seekerFound = 0 at location X=1, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 98	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 99	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 100	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 101	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 102	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 103	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 104	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 105	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 106	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 107	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 108	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 109	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 110	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 111	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 112	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 113	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 114	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 115	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 116	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 117	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 118	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 119	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 120	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 121	seekerFound = 0 at location X=0, Y=3	hiderFound = 0 at location X=6, Y=6
+Turn 122	seekerFound = 0 at location X=0, Y=4	hiderFound = 0 at location X=6, Y=6
+Turn 123	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 124	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 125	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 126	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 127	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 128	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 129	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 130	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=7
+Turn 131	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 132	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 133	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 134	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 135	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 136	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 137	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 138	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 139	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 140	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 141	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 142	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 143	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 144	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 145	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=9
+Turn 146	seekerFound = 0 at location X=0, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 147	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 148	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 149	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 150	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 151	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 152	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 153	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 154	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 155	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 156	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 157	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 158	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 159	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 160	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 161	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 162	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=8
+Turn 163	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=7
+Turn 164	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 165	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 166	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 167	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 168	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 169	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 170	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 171	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 172	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 173	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 174	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 175	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 176	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 177	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 178	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 179	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 180	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 181	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=6, Y=6
+Turn 182	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=7, Y=6
+Turn 183	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=8, Y=6
+Turn 184	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 185	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 186	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 187	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 188	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 189	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=6
+Turn 190	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=7
+Turn 191	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=8
+Turn 192	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 193	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 194	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 195	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 196	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 197	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 198	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9
+Turn 199	seekerFound = 0 at location X=1, Y=5	hiderFound = 0 at location X=9, Y=9

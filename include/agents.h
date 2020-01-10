@@ -8,21 +8,24 @@ class Agent {
     int X    = 0;  // X coordinate of the agent.
     int Y    = 0;  // Y coordinate of the agent.
     int vision = 3; // Vision range (fixed)
-    int direction = 4; // Direction in which the agent previously moved and currently faces 
-    std::vector<int> estimates;
-    
+    int direction = 0; // Direction in which the agent previously moved and currently faces, randomized in constructor 
+    std::vector<int> estimates; // Observed values = estimates of rewards in each grid tile
+    int discovered = 0; 
+
     Agent(int t, std::vector<int> &grid);
 
-    void act(int dir, std::vector<int> &grid);
-    int check_for_wall(int direction, std::vector<int> &grid);
+    void act(int dir, std::vector<int> &grid, double epsilon);
+    int checkForWall(int direction, std::vector<int> &grid);
     int decide(double epsilon, std::vector<int> &grid);
-    int find_agent_north(std::vector<int> &grid);
-    int find_agent_south(std::vector<int> &grid);
-    int find_agent_east(std::vector<int> &grid);
-    int find_agent_west(std::vector<int> &grid);
-    int find_agent(std::vector<int> &grid);
-    int look_around(std::vector<int> &grid);
-    int play_turn(double epsilon, std::vector<int> &grid);
+    int findAgentNorth(std::vector<int> &grid);
+    int findAgentSouth(std::vector<int> &grid);
+    int findAgentEast(std::vector<int> &grid);
+    int findAgentWest(std::vector<int> &grid);
+    int findAgent(std::vector<int> &grid);
+    int bestDirection();
+    int lookAround(std::vector<int> grid, double epsilon);
+    int playTurn(double epsilon, std::vector<int> &grid);
+    void getReward(std::vector<double> rewards, int turn, int hiderFound);
 
     int getX_Coord();
     int getY_Coord();
@@ -31,6 +34,7 @@ class Agent {
     void setY_Coord(int y_coord);
 
     void printCoords();
+    int getDirection();
 };
 
 #endif /* AGENT_H */
