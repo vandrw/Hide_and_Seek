@@ -12,7 +12,7 @@ Agent::Agent(int t, std::vector<int> &grid) {
 
     type = t;                                   // set agent type
     direction = randIntDirection(generator);    // set random starting direction
-    if (type == 0){ estimates.resize(100, 0); } // resize array with observed rewards
+    if (type == 0){ estimates.resize(100, 5); } // resize array with observed rewards
     if (type == 1){ estimates.resize(100, 5); } // the seeker's array gets initialized with optimistic
                                                 // initial values to encourage exploration
 
@@ -295,7 +295,7 @@ double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
             newReward = rewards[X*10+Y] + randDouble(generator) + 1;
         }else{
             // seekers get the tile reward - 2 for every turn until they dicover the hider
-            newReward = rewards[X*10+Y] + randDouble(generator) - 2;
+            newReward = rewards[X*10+Y] + randDouble(generator) - 1.5;
         }
     }else{
         if (type == 0){

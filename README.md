@@ -8,7 +8,11 @@ This project creates a competitive multi-agent environment, where 2 players in e
 - [x] if seeker finds hider, rush back to stat
 - [ ] increase maze 
 - [x] see first reward in front (exploit by going forward)
-- [ ] hider gets the go-to-base reward from the beginning
+- [x] prints to file rewards for each agent per turn, winner of a game, end turn, turn when hider is found
+- [ ] hider gets the go-to-base reward from the beginning (? mayyybe)
+- [ ] print average reward per turn over multiple games for each agent
+- [ ] prints how many times each agent (type) won
+- [ ] prints end turn for every game & turn when hider was found
 
 ## How to Run
 To run the code, go to a terminal, set the present working directory as K-armed_Bandits and run the following commands:

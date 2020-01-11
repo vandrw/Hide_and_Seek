@@ -11,12 +11,20 @@ using namespace std;
 
 // Whole experiment is for X simulations
 // Simulation has 100 games with the same starting location and hider seeker observations
-// Each game has 200 turns
+// Each game has 300 turns
 
 int main(int argc, char **argv) {
      ofstream logs;
-     logs.open ("logs.csv");
-     logs <<"Game\t End Turn\t Outcome\t Scores \n";
-     makeSimulation(logs);
+
+     int turnsPerGame = 300;
+     int gamesPerSimulation = 5;
+     
+     logs.open ("bin/logs.csv");
+     logs <<"Game, Agent, End Turn, Winner, Hider Discovered, Scores\n";
+     
+     makeSimulation(turnsPerGame, gamesPerSimulation, logs);
+     
      logs.close();
+
+     return 0;
 }
