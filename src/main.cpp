@@ -6,17 +6,10 @@
 #include <exception>
 using namespace std;
 
+// Whole experiment is for X simulations
+// Simulation has 100 games with the same starting location and hider seeker observations
+// Each game has 200 turns
+
 int main(int argc, char **argv) {
-     std::vector<int> grid(100, 0);
-     std::vector<double> rewards(100, 0);
-
-     initializeGrid(grid);
-     initializeRewardsGrid(rewards);
-
-     Agent  hider(0, grid);
-     Agent seeker(1, grid);
-
-     printSimulation(grid, hider, seeker);
-
-     makeGame(grid, rewards, hider, seeker);
+     makeSimulation();
 }

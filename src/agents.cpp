@@ -10,10 +10,11 @@ Agent::Agent(int t, std::vector<int> &grid) {
     uniform_int_distribution<int> randInt(0, 9);
     uniform_int_distribution<int> randIntDirection(0, 3);
 
-    type = t;                                  // set agent type
-    direction = randIntDirection(generator);   // set random starting direction
-    if (type == 0){ estimates.resize(100, 0); }                 // resize array with observed rewards
-    if (type == 1){ estimates.resize(100, 5); }
+    type = t;                                   // set agent type
+    direction = randIntDirection(generator);    // set random starting direction
+    if (type == 0){ estimates.resize(100, 0); } // resize array with observed rewards
+    if (type == 1){ estimates.resize(100, 5); } // the seeker's array gets initialized with optimistic
+                                                // initial values to encourage exploration
 
     int x_hider, y_hider;
 
@@ -39,6 +40,7 @@ Agent::Agent(int t, std::vector<int> &grid) {
     }
     grid[X * 10 + Y] = type + 2;    // place agent on grid
 }
+
 
 void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
     // Setting the old coordinate to empty.
@@ -286,16 +288,20 @@ void Agent::getReward(std::vector<double> rewards, int turn, double bonus){
     random_device generator;
     uniform_real_distribution<double> randDouble(-1, 1);
     double newReward;
-    if (type == 0){
-        // hiders get the tile reward + 1 for every turn they are not discovered 
-        // hider gets penalty when it is found
-        newReward = rewards[X*10+Y] + randDouble(generator) + (1 - discovered) + bonus;
-    }else{
-        // seekers get the tile reward - 2 for every turn until they dicover the hider
-        // seeker gets bonus when it finds the hider for the first time
-        if (discovered == 0){
-            newReward = rewards[X*10+Y] + randDouble(generator) - 2;
+    if (discovered == 0){
+        if (type == 0){
+            // hiders get the tile reward + 1 for every turn they are not discovered 
+            newReward = rewards[X*10+Y] + randDouble(generator) + 1;
         }else{
+            // seekers get the tile reward - 2 for every turn until they dicover the hider
+            newReward = rewards[X*10+Y] + randDouble(generator) - 2;
+        }
+    }else{
+        if (type == 0){
+            // hider gets a penalty when it's discovered
+            newReward = rewards[X*10+Y] + randDouble(generator) - bonus;
+        }else{
+            // seeker gets bonus when it discovers the hider
             newReward = rewards[X*10+Y] + randDouble(generator) + bonus;
         }
     }
@@ -316,6 +322,13 @@ void Agent::setX_Coord(int x_coord) {
 
 void Agent::setY_Coord(int y_coord) {
     Y = y_coord;
+}
+
+int Agent::hasWon(int baseX, int baseY){
+    if (X == baseX && Y == baseY && discovered = 1){
+        return 1;
+    }
+    return 0;
 }
 
 void Agent::printCoords() {

@@ -5,6 +5,7 @@
 
 void initializeGrid(std::vector<int> &grid);
 void initializeRewardsGrid(std::vector<double> &rewards);
+void initializeRewardsToBase(std::vector<double> &rewardsToBase, int baseX, int baseY); 
 void printGrid(std::vector<int> grid, Agent hider, Agent seeker);
 void addDirection(std::vector<int> grid, std::vector<int> &grd, Agent hider, Agent seeker);
 

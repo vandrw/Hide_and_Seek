@@ -33,6 +33,7 @@ class Agent {
     void setX_Coord(int x_coord);
     void setY_Coord(int y_coord);
 
+    int hasWon(int baseX, int baseY);
     void printCoords();
     int getDirection();
 };
