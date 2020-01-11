@@ -4,6 +4,9 @@
 #include "agents.h"
 #include "simulation.h"
 #include <exception>
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 // Whole experiment is for X simulations
@@ -11,5 +14,9 @@ using namespace std;
 // Each game has 200 turns
 
 int main(int argc, char **argv) {
-     makeSimulation();
+     ofstream logs;
+     logs.open ("logs.csv");
+     logs <<"Game\t End Turn\t Outcome\t Scores \n";
+     makeSimulation(logs);
+     logs.close();
 }

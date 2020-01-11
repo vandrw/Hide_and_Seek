@@ -69,7 +69,7 @@ void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
     grid[X * 10 + Y] = type + 2;
 }
 
-int Agent::checkForWall(int direction, std::vector<int> &grid){
+int Agent::checkForWall(int direction, std::vector<int> grid){
     switch (direction) {
         case 0:         // NORTH
             if ( (X - 1 >= 0) && 
@@ -95,7 +95,7 @@ int Agent::checkForWall(int direction, std::vector<int> &grid){
     }
 }
 
-int Agent::decide(double epsilon, std::vector<int> &grid){
+int Agent::decide(double epsilon, std::vector<int> grid){
     random_device generator;
     uniform_real_distribution<double> randDouble(0, 1);
     int decision;
@@ -112,7 +112,7 @@ int Agent::decide(double epsilon, std::vector<int> &grid){
     return decision;
 }
 
-int Agent::findAgentNorth(std::vector<int> &grid){
+int Agent::findAgentNorth(std::vector<int> grid){
     // There is a wall ahead or the end of the maze => can't see agents there
     if (X - 1 < 0 || grid[(X-1) * 10 + Y] == 1) { return 0; }
     // Sees agent ahead
@@ -142,7 +142,7 @@ int Agent::findAgentNorth(std::vector<int> &grid){
     return 0;   
 }
 
-int Agent::findAgentSouth(std::vector<int> &grid){
+int Agent::findAgentSouth(std::vector<int> grid){
     // There is a wall ahead or the end of the maze => can't see agents there
     if (X + 1 < 0 || grid[(X+1) * 10 + Y] == 1) { return 0; }
     // Sees agent ahead
@@ -172,7 +172,7 @@ int Agent::findAgentSouth(std::vector<int> &grid){
     return 0;   
 }
 
-int Agent::findAgentEast(std::vector<int> &grid){
+int Agent::findAgentEast(std::vector<int> grid){
     // There is a wall ahead or the end of the maze => can't see agents there
     if (Y + 1 < 0 || grid[X * 10 + Y+1] == 1) { return 0; }
     // Sees agent ahead
@@ -202,7 +202,7 @@ int Agent::findAgentEast(std::vector<int> &grid){
     return 0;   
 }
 
-int Agent::findAgentWest(std::vector<int> &grid){
+int Agent::findAgentWest(std::vector<int> grid){
     // There is a wall ahead or the end of the maze => can't see agents there
     if (Y - 1 < 0 || grid[X * 10 + Y-1] == 1) { return 0; }
     // Sees agent ahead
@@ -232,7 +232,7 @@ int Agent::findAgentWest(std::vector<int> &grid){
     return 0;   
 }
 
-int Agent::findAgent(std::vector<int> &grid){
+int Agent::findAgent(std::vector<int> grid){
     switch (direction) {
         case 0:         // NORTH
             return findAgentNorth(grid);      
@@ -284,7 +284,8 @@ int Agent::playTurn(double epsilon, std::vector<int> &grid){
     return findAgent(grid);
 }
 
-void Agent::getReward(std::vector<double> rewards, int turn, double bonus){
+
+double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
     random_device generator;
     uniform_real_distribution<double> randDouble(-1, 1);
     double newReward;
@@ -306,6 +307,7 @@ void Agent::getReward(std::vector<double> rewards, int turn, double bonus){
         }
     }
     estimates[X*10+Y] += (double)(1/(turn+1)) * (newReward - estimates[X*10+Y]);
+    return newReward;
 }
 
 int Agent::getX_Coord() {
@@ -325,7 +327,7 @@ void Agent::setY_Coord(int y_coord) {
 }
 
 int Agent::hasWon(int baseX, int baseY){
-    if (X == baseX && Y == baseY && discovered = 1){
+    if (X == baseX && Y == baseY && discovered == 1){
         return 1;
     }
     return 0;

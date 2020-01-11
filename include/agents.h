@@ -15,17 +15,17 @@ class Agent {
     Agent(int t, std::vector<int> &grid);
 
     void act(int dir, std::vector<int> &grid, double epsilon);
-    int checkForWall(int direction, std::vector<int> &grid);
-    int decide(double epsilon, std::vector<int> &grid);
-    int findAgentNorth(std::vector<int> &grid);
-    int findAgentSouth(std::vector<int> &grid);
-    int findAgentEast(std::vector<int> &grid);
-    int findAgentWest(std::vector<int> &grid);
-    int findAgent(std::vector<int> &grid);
+    int checkForWall(int direction, std::vector<int> grid);
+    int decide(double epsilon, std::vector<int> grid);
+    int findAgentNorth(std::vector<int> grid);
+    int findAgentSouth(std::vector<int> grid);
+    int findAgentEast(std::vector<int> grid);
+    int findAgentWest(std::vector<int> grid);
+    int findAgent(std::vector<int> grid);
     int bestDirection(std::vector<int> grid);
     int lookAround(std::vector<int> grid, double epsilon);
     int playTurn(double epsilon, std::vector<int> &grid);
-    void getReward(std::vector<double> rewards, int turn, double bonus);
+    double getReward(std::vector<double> rewards, int turn, double bonus);
 
     int getX_Coord();
     int getY_Coord();
