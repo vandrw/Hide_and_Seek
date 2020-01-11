@@ -93,9 +93,9 @@ int makeGame(std::vector<double> &hiderScores, std::vector<double> &seekerScores
 void printScores(std::ofstream& logs, int game, int endTurn, std::vector<double> hiderScores, std::vector<double> seekerScores){
     logs << game << "\t" << endTurn << "\t";
     if (hiderScores[0] == 0){
-        cout <<"hider\t";
+        logs <<"hider\t";
     }else{
-        cout <<"seeker\t";
+        logs <<"seeker\t";
     }
     for (int i = 1; i < endTurn + 1; i++){
         logs << hiderScores[i] <<"\t";
@@ -103,9 +103,9 @@ void printScores(std::ofstream& logs, int game, int endTurn, std::vector<double>
     logs <<"\n";
     logs << game << "\t" << endTurn << "\t";
     if (seekerScores[0] == 0){
-        cout <<"hider\t";
+        logs <<"hider\t";
     }else{
-        cout <<"seeker\t";
+        logs <<"seeker\t";
     }
     for (int i = 1; i < endTurn + 1; i++){
         logs << seekerScores[i] <<"\t";
