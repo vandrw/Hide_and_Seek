@@ -24,7 +24,7 @@ class Simulation {
     // Experiment parameters
     int    simPerExperiment   = 5;                    // Number of simulations in an experiment run.
     int    gamesPerSimulation = 100;                    // Number of games in a simulation.
-    int    turnsPerGame       = 3000;                  // Number of turns in a Game.
+    int    turnsPerGame       = 200;                  // Number of turns in a Game.
 
     std::vector<int>    grid;                         // The grid where the agents play.
 

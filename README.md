@@ -5,7 +5,7 @@ This project creates a competitive multi-agent environment, where 2 players in e
 - [x] Implement a field of view for the seeker (and possibly the hider)
 - [x] look around (explore), move (exploit)
 - [x] Have the seeker and the hider spawn at a random position, with a distance higher than the vision range
-- [x] if seeker finds hider, rush back to stat
+- [x] if seeker finds hider, rush back to start
 - [ ] increase maze 
 - [x] see first reward in front (exploit by going forward)
 - [x] prints to file rewards for each agent per turn, winner of a game, end turn, turn when hider is found

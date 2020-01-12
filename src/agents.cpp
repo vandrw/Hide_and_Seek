@@ -62,6 +62,8 @@ void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
         case 4:
             // In this case the agent will look in all directions and choose a new direction for the next turn      
             dir = lookAround(grid, epsilon);
+            break;
+        case 5:         // Do nothing because agent is blocked (by another agent)
             break;     
     }
     // chance the direction in which the agent is looking accordingly
@@ -91,17 +93,28 @@ int Agent::checkForWall(int direction, std::vector<int> grid){
                  (grid[X * 10 + Y - 1] == 0)
                ) { return 1;}
             break;
-        return 0;
     }
+    return 0;
+}
+
+int Agent::isBlocked(std::vector<int> grid){
+    if ( !checkForWall(0, grid) && !checkForWall(1, grid) && 
+        !checkForWall(2, grid) && !checkForWall(3, grid)){
+            return 1;
+        } 
+    return 0;
 }
 
 int Agent::decideRandomly(std::vector<int> grid){
     random_device generator;
     uniform_int_distribution<int> randInt(0, 3);
     int action;
-    do{
-    action = randInt(generator);
-    }while(!checkForWall(action, grid));
+    do{ 
+        if (isBlocked(grid)){   // If agent is blocked, do nothing
+            return 5;
+        }
+        action = randInt(generator);
+    }   while(!checkForWall(action, grid));
     return action;   
 }
 
