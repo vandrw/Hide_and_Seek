@@ -25,3 +25,8 @@ run:
 	@clear
 	@echo "Running the file...\n";
 	@$(TARGET)/$(OUTPUT) $(ARGS)
+
+all:
+	@$(MAKE) -s clean;
+	@$(MAKE) -s;
+	@$(MAKE) -s run

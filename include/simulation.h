@@ -22,7 +22,7 @@ class Simulation {
     int    hiderAdvantage = 50;
 
     // Experiment parameters
-    int    simPerExperiment   = 5;                    // Number of simulations in an experiment run.
+    int    simPerExperiment   = 50;                    // Number of simulations in an experiment run.
     int    gamesPerSimulation = 100;                    // Number of games in a simulation.
     int    turnsPerGame       = 200;                  // Number of turns in a Game.
 
