@@ -16,8 +16,8 @@ using namespace std;
 int main(int argc, char **argv) {
      ofstream logs;
 
-     int turnsPerGame = 300;
-     int gamesPerSimulation = 5;
+     int turnsPerGame = 500;
+     int gamesPerSimulation = 10;
      
      logs.open ("bin/logs.csv");
      logs <<"Game, Agent, End Turn, Winner, Hider Discovered, Scores\n";

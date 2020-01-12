@@ -51,7 +51,7 @@ int makeGame(int turnsPerGame, std::vector<double> &hiderScores, std::vector<dou
         if (turn < hiderAdvantage){
             seekerFound = hider.playTurn(epsilon, grid);
             hiderScores[turn+2] = hider.getReward(rewardsHider, turn, bonus);
-            printSimulation(grid, hider, seeker, turn);
+            //printSimulation(grid, hider, seeker, turn);
             continue;
         }
 
@@ -89,7 +89,7 @@ int makeGame(int turnsPerGame, std::vector<double> &hiderScores, std::vector<dou
             bonus = 0;
         }
 
-        printSimulation(grid, hider, seeker, turn);
+        //printSimulation(grid, hider, seeker, turn);
     }
 
     return turnsPerGame;
