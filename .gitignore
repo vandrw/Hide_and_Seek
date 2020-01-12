@@ -1,11 +1,13 @@
 # Ignore the build and lib dirs
 build/*
 !build/.gitkeep
-lib/*
 
-# Ignore bandit data
+# Ignore data
 data/*
 !data/.gitkeep
+
+# Ignore images
+docs/*.png
 
 # Ignore any executables
 bin/*

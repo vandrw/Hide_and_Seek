@@ -31,9 +31,9 @@ class Simulation {
     int    hiderAdvantage = 50;
 
     // Experiment parameters
-    int    simPerExperiment   = 10;                    // Number of simulations in an experiment run.
-    int    gamesPerSimulation = 200;                  // Number of games in a simulation.
-    int    turnsPerGame       = 300;                  // Number of turns in a Game.
+    int    simPerExperiment   = 50;                    // Number of simulations in an experiment run.
+    int    gamesPerSimulation = 100;                    // Number of games in a simulation.
+    int    turnsPerGame       = 200;                  // Number of turns in a Game.
 
     std::vector<int>    grid;                         // The grid where the agents play.
 

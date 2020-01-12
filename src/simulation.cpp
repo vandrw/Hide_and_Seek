@@ -13,8 +13,8 @@ using namespace std;
 
 void Simulation::makeExperiment() {
     ofstream logs;
-    
-    logs.open ("bin/logs.csv", std::ofstream::out | ios::trunc);
+
+    logs.open ("data/logs.csv", std::ofstream::out | ios::trunc);
     logs <<"Simulation,Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
 
     experimentResults eRes;

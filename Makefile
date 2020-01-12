@@ -25,3 +25,13 @@ run:
 	@clear
 	@echo "Running the file...\n";
 	@$(TARGET)/$(OUTPUT) $(ARGS)
+
+graph:
+	@echo "Generating the plot...";
+	@python docs/graph.py
+
+all:
+	@$(MAKE) -s clean;
+	@$(MAKE) -s;
+	@$(MAKE) -s run;
+	@$(MAKE) -s graph;
