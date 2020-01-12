@@ -1,6 +1,10 @@
+import matplotlib as mpl
+mpl.use('Agg')
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
+
 
 plt.rcParams["figure.figsize"] = [12,10]
 plt.rcParams.update({'font.size': 22})
