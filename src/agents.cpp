@@ -1,6 +1,6 @@
+#include <iostream>
 #include <random>
 #include <vector>
-#include <iostream>
 #include "agents.h"
 
 using namespace std;
@@ -10,11 +10,11 @@ Agent::Agent(int t, std::vector<int> &grid) {
     uniform_int_distribution<int> randInt(0, 9);
     uniform_int_distribution<int> randIntDirection(0, 3);
 
-    type = t;                                   // set agent type
-    direction = randIntDirection(generator);    // set random starting direction
-    if (type == 0){ estimates.resize(100, 5); } // resize array with observed rewards
-    if (type == 1){ estimates.resize(100, 5); } // the seeker's array gets initialized with optimistic
-                                                // initial values to encourage exploration
+    type = t;                                   // Set agent type
+    direction = randIntDirection(generator);    // Set random starting direction
+    if (type == 0){ estimates.resize(100, 5); } // Resize array with observed rewards
+    if (type == 1){ estimates.resize(100, 5); } // The seeker's array gets initialized with optimistic
+                                                // Initial values to encourage exploration
 
     int x_hider, y_hider;
 
@@ -35,10 +35,10 @@ Agent::Agent(int t, std::vector<int> &grid) {
     Y = randInt(generator);
 
     while (grid[X * 10 + Y] != 0 || abs(X-x_hider) < 4 || abs(Y-y_hider) <4) {
-        X = randInt(generator);     // set appropriate X
-        Y = randInt(generator);     // set appropriate Y
+        X = randInt(generator);     // Set appropriate X
+        Y = randInt(generator);     // Set appropriate Y
     }
-    grid[X * 10 + Y] = type + 2;    // place agent on grid
+    grid[X * 10 + Y] = type + 2;    // Place agent on grid
 }
 
 
@@ -158,7 +158,7 @@ int Agent::findAgentSouth(std::vector<int> grid){
     }
     // No third row to check
     if (X+3 >= 10 ){ return 0;}
-    // Check thrird row
+    // Check third row
     for (int y = Y-2; y <= Y + 2; y++){
         // If agent found
         if (y >= 0 && y < 10 && grid[(X+3)*10+y] == 3-type) {
@@ -318,6 +318,10 @@ int Agent::getY_Coord() {
     return Y;
 }
 
+int Agent::getDirection(){
+    return direction;
+}
+
 void Agent::setX_Coord(int x_coord) {
     X = x_coord;
 }
@@ -342,8 +346,4 @@ void Agent::printCoords() {
     }
     
     cout << "is located at (" << getX_Coord() << ", " << getY_Coord() << ").\n";
-}
-
-int Agent::getDirection(){
-    return direction;
 }

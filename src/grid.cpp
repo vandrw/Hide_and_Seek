@@ -18,6 +18,7 @@
 #include "agents.h"
 #include <stdlib.h>
 #include <exception>
+
 using namespace std;
 
 void initializeGrid(std::vector<int> &grid) {
@@ -91,7 +92,7 @@ void printGrid(std::vector<int> grid, Agent hider, Agent seeker) {
 
 
     if(grd.empty()){
-        cout << "Grid is empty, cannot be printed!\n";
+        cout << "The grid is empty!\n";
         throw std::exception();
         return;
     }
