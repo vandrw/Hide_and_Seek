@@ -31,8 +31,6 @@ class Agent {
 
     int bestDirection(std::vector<int> grid);
 
-    int lookAround(std::vector<int> grid, double epsilon);
-
     int playTurn(double epsilon, std::vector<int> &grid);
 
     double getReward(std::vector<double> rewards, int turn, double bonus);

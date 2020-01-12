@@ -13,19 +13,24 @@ using namespace std;
 
 void Simulation::makeExperiment() {
     ofstream logs;
-
+    
     logs.open ("bin/logs.csv", std::ofstream::out | ios::trunc);
     logs <<"Simulation,Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
 
+    experimentResults eRes;
+    adjustSize(eRes);
+
     for (int i=0; i < simPerExperiment; i++) {
         simNum++;
-        makeSimulation(logs);
+        makeSimulation(logs, eRes);
     }
+
+    printExperimentResults(eRes);
 
     logs.close();
 }
 
-void Simulation::makeSimulation(std::ofstream& logs) {
+void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
     gameResults gRes;
 
     rewardsSeeker.resize(100, 0.0);
@@ -52,7 +57,9 @@ void Simulation::makeSimulation(std::ofstream& logs) {
 
         gRes = makeGame(hider, seeker);
 
-        printScores(logs, gRes);
+        transferGameResults(gRes, eRes, i);
+
+        printScoresPerSimulation(logs, gRes);
 
         // (Re-)set starting locations, grid & scores for next game
         initializeGrid(grid);
@@ -176,7 +183,7 @@ void Simulation::printSimulation(Agent hider, Agent seeker, int hiderFound) {
     seeker.printCoords();
 }
 
-void Simulation::printScores(std::ofstream& logs, gameResults gRes) {
+void Simulation::printScoresPerSimulation(std::ofstream& logs, gameResults gRes) {
     logs << simNum << "," << gameNum << "," << gRes.endTurn 
          << "," << gRes.hiderFound << "," << gRes.hiderFoundTurn 
          << "," << gRes.wonBySeeker << "," 
@@ -184,4 +191,43 @@ void Simulation::printScores(std::ofstream& logs, gameResults gRes) {
          << gRes.totalRewardSeeker / turnsPerGame;
     
     logs << "\n";
+}
+
+void Simulation::adjustSize(experimentResults &eRes){
+    eRes.endTurns.resize(gamesPerSimulation,0.0);
+    eRes.hiderFoundTurn.resize(gamesPerSimulation,0.0);
+    eRes.hiderFound.resize(gamesPerSimulation,0.0);
+    eRes.hiderRewards.resize(gamesPerSimulation,0.0);
+    eRes.seekerRewards.resize(gamesPerSimulation,0.0);
+    eRes.seekerWins.resize(gamesPerSimulation,0.0);
+}
+
+void Simulation::transferGameResults(gameResults gRes, experimentResults &eRes, int i){
+    eRes.endTurns[i] += gRes.endTurn;
+    eRes.hiderFound[i] += gRes.hiderFound;
+    if(gRes.hiderFoundTurn != -1){ 
+        eRes.hiderFoundTurn[i] += gRes.hiderFoundTurn;
+    }else {
+        eRes.hiderFoundTurn[i] += turnsPerGame;
+    }
+    eRes.hiderRewards[i] += gRes.totalRewardHider;
+    eRes.seekerRewards[i] += gRes.totalRewardSeeker;
+    eRes.seekerWins[i] += gRes.wonBySeeker;
+}
+
+void Simulation::printExperimentResults(experimentResults eRes){
+    ofstream experiment;
+    experiment.open("data/experiment.csv", std::ofstream::out | ios::trunc);
+    experiment <<"Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
+    
+    for (int i = 0; i<gamesPerSimulation; i++){
+        experiment  << i << "," << eRes.endTurns[i]/simPerExperiment << "," 
+                    << eRes.hiderFound[i]/simPerExperiment << "," 
+                    << eRes.hiderFoundTurn[i]/simPerExperiment << ","
+                    << eRes.seekerWins[i]/simPerExperiment << ","
+                    << eRes.hiderRewards[i]/simPerExperiment << ","
+                    << eRes.seekerRewards[i]/simPerExperiment <<"\n";              
+    }
+
+    experiment.close();
 }

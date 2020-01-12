@@ -59,10 +59,6 @@ void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
         case 3:         // WEST
             Y--;
             break;
-        case 4:
-            // In this case the agent will look in all directions and choose a new direction for the next turn      
-            dir = lookAround(grid, epsilon);
-            break;
         case 5:         // Do nothing because agent is blocked (by another agent)
             break;     
     }
@@ -109,10 +105,10 @@ int Agent::decideRandomly(std::vector<int> grid){
     random_device generator;
     uniform_int_distribution<int> randInt(0, 3);
     int action;
-    do{ 
-        if (isBlocked(grid)){   // If agent is blocked, do nothing
+    if (isBlocked(grid)){   // If agent is blocked, do nothing
             return 5;
-        }
+    }
+    do{ 
         action = randInt(generator);
     }   while(!checkForWall(action, grid));
     return action;   
@@ -120,19 +116,16 @@ int Agent::decideRandomly(std::vector<int> grid){
 
 int Agent::decide(double epsilon, std::vector<int> grid){
     random_device generator;
-    uniform_real_distribution<double> randDouble(0, 1);
+    uniform_real_distribution<double> randDouble(0,1);
+    uniform_int_distribution<int> randInt(0, 3);
     int decision;
-    // Decide to change direction with a probability of epsilon, else keep direction
-    if (randDouble(generator) > 1 - epsilon){
-        decision = 4;
-    }else{
-        decision = direction;
-        // If there is a wall in the chosen direction, then look around
-        if(!checkForWall(direction, grid)){
-            decision = 4;
-        }
+    if (isBlocked(grid)) {
+        return 5;
     }
-    return decision;
+    if (randDouble(generator) > 1-epsilon){
+        return decideRandomly(grid);
+    }
+    return bestDirection(grid);
 }
 
 int Agent::findAgentNorth(std::vector<int> grid){
@@ -281,8 +274,9 @@ int Agent::bestDirection(std::vector<int> grid){
     if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y-1];} else {values[3] = -10000;}
 
     max = values[0];
+    direction = 0;
     for (int i = 1; i < 4; i++){
-        if (max > values[i]){
+        if (max < values[i]){
             max = values[i];
             direction = i;
         }
@@ -291,19 +285,10 @@ int Agent::bestDirection(std::vector<int> grid){
 
 }
 
-int Agent::lookAround(std::vector<int> grid, double epsilon) {
-    random_device generator;
-    uniform_real_distribution<double> randDouble(0,1);
-    uniform_int_distribution<int> randInt(0, 3);
-    if (randDouble(generator) > 1-epsilon){
-        return randInt(generator);
-    }
-    return bestDirection(grid);
-}
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    if (type == 1){
+    if (type == 0){
         action = decideRandomly(grid);
     }else{
         action = decide(epsilon, grid);

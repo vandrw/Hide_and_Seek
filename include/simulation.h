@@ -3,6 +3,15 @@
 
 #include "agents.h"
 
+struct experimentResults{
+    std::vector<double> endTurns;       
+    std::vector<double> hiderFoundTurn;
+    std::vector<double> hiderFound;
+    std::vector<double> hiderRewards;
+    std::vector<double> seekerRewards;
+    std::vector<double> seekerWins;
+};
+
 struct gameResults {
     int    endTurn           = 0;
     int    hiderFound        = 0;
@@ -22,9 +31,9 @@ class Simulation {
     int    hiderAdvantage = 50;
 
     // Experiment parameters
-    int    simPerExperiment   = 5;                    // Number of simulations in an experiment run.
-    int    gamesPerSimulation = 100;                    // Number of games in a simulation.
-    int    turnsPerGame       = 200;                  // Number of turns in a Game.
+    int    simPerExperiment   = 10;                    // Number of simulations in an experiment run.
+    int    gamesPerSimulation = 200;                  // Number of games in a simulation.
+    int    turnsPerGame       = 300;                  // Number of turns in a Game.
 
     std::vector<int>    grid;                         // The grid where the agents play.
 
@@ -38,11 +47,14 @@ class Simulation {
     int turnNum = 0;
 
     void makeExperiment();
-    void makeSimulation(std::ofstream& logs);
+    void makeSimulation(std::ofstream& logs, experimentResults &eRes);
     gameResults  makeGame(Agent hider, Agent seeker);
 
     void printSimulation(Agent hider, Agent seeker, int hiderFound);
-    void printScores(std::ofstream& logs, gameResults gRes);
+    void printScoresPerSimulation(std::ofstream& logs, gameResults gRes);
+    void adjustSize (experimentResults &eRes);
+    void transferGameResults(gameResults gRes, experimentResults &eRes, int i);
+    void printExperimentResults(experimentResults eRes);
 };
 
 #endif /* SIMULATION_H */
