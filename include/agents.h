@@ -21,7 +21,7 @@ class Agent {
     void act(int dir, std::vector<int> &grid, double epsilon);
     int checkForWall(int direction, std::vector<int> grid);
     int decide(double epsilon, std::vector<int> grid);
-
+    int decideRandomly(std::vector<int> grid);
     int findAgentNorth(std::vector<int> grid);
     int findAgentSouth(std::vector<int> grid);
     int findAgentEast(std::vector<int> grid);

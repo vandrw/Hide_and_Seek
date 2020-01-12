@@ -95,6 +95,16 @@ int Agent::checkForWall(int direction, std::vector<int> grid){
     }
 }
 
+int Agent::decideRandomly(std::vector<int> grid){
+    random_device generator;
+    uniform_int_distribution<int> randInt(0, 3);
+    int action;
+    do{
+    action = randInt(generator);
+    }while(!checkForWall(action, grid));
+    return action;   
+}
+
 int Agent::decide(double epsilon, std::vector<int> grid){
     random_device generator;
     uniform_real_distribution<double> randDouble(0, 1);
@@ -279,7 +289,12 @@ int Agent::lookAround(std::vector<int> grid, double epsilon) {
 }
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
-    int action = decide(epsilon, grid);
+    int action;
+    if (type == 1){
+        action = decideRandomly(grid);
+    }else{
+        action = decide(epsilon, grid);
+    }
     act(action, grid, epsilon);
     return findAgent(grid);
 }
