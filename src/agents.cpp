@@ -12,8 +12,8 @@ Agent::Agent(int t, std::vector<int> &grid) {
 
     type = t;                                   // Set agent type
     direction = randIntDirection(generator);    // Set random starting direction
-    if (type == 0){ estimates.resize(100, 5); } // Resize array with observed rewards
-    if (type == 1){ estimates.resize(100, 5); } // The seeker's array gets initialized with optimistic
+    if (type == 0){ estimates.resize(100, 0.0); } // Resize array with observed rewards
+    if (type == 1){ estimates.resize(100, 5.0); } // The seeker's array gets initialized with optimistic
                                                 // Initial values to encourage exploration
 
     int x_hider, y_hider;
@@ -288,11 +288,11 @@ int Agent::bestDirection(std::vector<int> grid){
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    if (type == 0){
-        action = decideRandomly(grid);
-    }else{
+    // if (type == 0){
+    //     action = decideRandomly(grid);
+    // }else{
         action = decide(epsilon, grid);
-    }
+    //}
     act(action, grid, epsilon);
     return findAgent(grid);
 }
@@ -307,8 +307,8 @@ double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
             // hiders get the tile reward + 1 for every turn they are not discovered 
             newReward = rewards[X*10+Y] + randDouble(generator) + 1;
         }else{
-            // seekers get the tile reward - 2 for every turn until they dicover the hider
-            newReward = rewards[X*10+Y] + randDouble(generator) - 1.5;
+            // seekers get the tile reward - 1 for every turn until they dicover the hider
+            newReward = rewards[X*10+Y] + randDouble(generator) - 1;
         }
     }else{
         if (type == 0){
@@ -319,8 +319,19 @@ double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
             newReward = rewards[X*10+Y] + randDouble(generator) + bonus;
         }
     }
-    estimates[X*10+Y] += (double)(1/(turn+1)) * (newReward - estimates[X*10+Y]);
+    estimates[X*10+Y] += (double)(1.0/(turn+1.0)) * (newReward - estimates[X*10+Y]);
+    //printEstimates();
     return newReward;
+}
+
+void Agent::printEstimates(){
+    for (int i = 0;i<10;i++){
+        for(int j=0; j<10; j++){
+            cout << estimates[i*10+j] << " ";
+        }
+        cout << "\n";
+    }
+    cout <<"\n";
 }
 
 int Agent::getX_Coord() {

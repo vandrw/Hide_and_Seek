@@ -69,6 +69,9 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
 
         seeker.setX_Coord(baseX);
         seeker.setY_Coord(baseY);
+
+        rewardsSeeker.resize(100, 0.0);
+
     }
 
     gameNum = 0;
@@ -96,7 +99,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
             gRes.endTurn = turn - 1;
 
-            break;
+            return gRes;
         }
 
         if (hider.hasWon (baseX, baseY)){
@@ -104,7 +107,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
             gRes.endTurn = turn - 1;
 
-            break;
+            return gRes;
         }
 
         if (turn < hiderAdvantage){
@@ -120,7 +123,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
         // make the bonus 10 to reward/penalize agents
         if (hiderDiscover != 0 && flag == 0){
             flag = 1;
-            bonus = 10.0;
+            bonus = 20.0;
             gRes.hiderFoundTurn = turn;
             hider.discovered = 1;   // hider was discovered
             seeker.discovered = 1;  // seeker has discovered the hider
@@ -131,7 +134,6 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
         if (flag == 0 || flag == 1) {
 
             gRes.totalRewardSeeker += seeker.getReward(rewardsSeeker, turn, bonus);
-
             // if in the last turn the hider was not found, he wins and gets a reward
             if (hider.discovered == 0 && turn == (turnsPerGame - 1) ){ 
                 bonus = 10.0;
@@ -153,7 +155,16 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
             bonus = 0;
         }
 
-        // printSimulation(hider, seeker, gRes.hiderFound);
+        //printSimulation(hider, seeker, gRes.hiderFound);
+
+        rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
+
+        if (hider.discovered == 1){
+            gRes.wonBySeeker = 1;
+            gRes.endTurn = turn;
+            return gRes;
+        }
+
     }
 
     turnNum = 0;
@@ -225,8 +236,8 @@ void Simulation::printExperimentResults(experimentResults eRes){
                     << eRes.hiderFound[i]/simPerExperiment << "," 
                     << eRes.hiderFoundTurn[i]/simPerExperiment << ","
                     << eRes.seekerWins[i]/simPerExperiment << ","
-                    << eRes.hiderRewards[i]/simPerExperiment << ","
-                    << eRes.seekerRewards[i]/simPerExperiment <<"\n";              
+                    << eRes.hiderRewards[i]/(simPerExperiment*eRes.endTurns[i]) << ","
+                    << eRes.seekerRewards[i]/(simPerExperiment*eRes.endTurns[i]) <<"\n";              
     }
 
     experiment.close();

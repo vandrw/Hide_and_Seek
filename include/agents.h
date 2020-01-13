@@ -13,7 +13,7 @@ class Agent {
     int vision = 3;     // Vision range (fixed)
     int discovered = 0; // Variable showing whether the hider was found.
 
-    std::vector<int> estimates; // Observed values = estimates of rewards in each grid tile
+    std::vector<double> estimates; // Observed values = estimates of rewards in each grid tile
     
 
     Agent(int t, std::vector<int> &grid);
@@ -38,6 +38,7 @@ class Agent {
     int getX_Coord();
     int getY_Coord();
     int getDirection();
+    void printEstimates();
 
     void setX_Coord(int x_coord);
     void setY_Coord(int y_coord);
