@@ -85,7 +85,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
     int    baseX = seeker.getX_Coord();
     int    baseY = seeker.getY_Coord();
-    
+
 
     for (int turn = 0; turn < turnsPerGame; turn ++) {
         turnNum++;
@@ -104,7 +104,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
         if (turn < hiderAdvantage){
             hider.playTurn(epsilon, grid);
-            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, bonus);
+            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn);
             // printSimulation(hider, seeker, -1);
             continue;
         }
@@ -112,7 +112,6 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
         hider.playTurn(epsilon, grid);
         hiderDiscover  = seeker.playTurn(epsilon, grid);
 
-        // make the bonus 10 to reward/penalize agents
         if (hiderDiscover == 1 && gRes.hiderFoundTurn == 0){
             gRes.hiderFoundTurn = turn;
             hider.discovered = 1;   // hider was discovered

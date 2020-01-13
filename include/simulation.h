@@ -19,7 +19,7 @@ struct gameResults {
     double totalRewardHider  = 0.0;   // Total observed reward for the Hider in each game.
     double totalRewardSeeker = 0.0;   // Total observed reward for the Seeker in each game.
 
-    int    hiderFoundTurn    = -1;    // The turn when the hider was found in each game.
+    int    hiderFoundTurn    = 0;    // The turn when the hider was found in each game.
     int    wonBySeeker       = 0;     // Value of 0 if the seeker lost and 1 otherwise.
 };
 
