@@ -266,16 +266,17 @@ int Agent::findAgent(std::vector<int> grid){
 int Agent::bestDirection(std::vector<int> grid){
     int direction;
     double max;
-    std::vector<double> values (4, 0);
+    std::vector<double> values (5, 0);
 
     if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[(X-1)*10+Y];} else {values[0] = -10000;}
     if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y+1];} else {values[1] = -10000;}
     if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[(X+1)*10+Y];} else {values[2] = -10000;}
     if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y-1];} else {values[3] = -10000;}
+    values[4] = grid[X*10 + Y];
 
-    max = values[0];
-    direction = 0;
-    for (int i = 1; i < 4; i++){
+    max = values[4];
+    direction = 5;
+    for (int i = 0; i < 4; i++){
         if (max < values[i]){
             max = values[i];
             direction = i;
