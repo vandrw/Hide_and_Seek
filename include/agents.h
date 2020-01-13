@@ -33,7 +33,7 @@ class Agent {
 
     int playTurn(double epsilon, std::vector<int> &grid);
 
-    double getReward(std::vector<double> rewards, int turn, double bonus);
+    double getReward(std::vector<double> rewards, int turn, int hiderFoundTurn);
 
     int getX_Coord();
     int getY_Coord();

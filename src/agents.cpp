@@ -299,11 +299,13 @@ int Agent::playTurn(double epsilon, std::vector<int> &grid){
 }
 
 
-double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
+double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTurn){
     random_device generator;
     uniform_real_distribution<double> randDouble(-1, 1);
     double newReward;
-    if (discovered == 0){
+   
+    if (hiderFoundTurn == 0){
+        // before the hider was discovered
         if (type == 0){
             // hiders get the tile reward + 1 for every turn they are not discovered 
             newReward = rewards[X*10+Y] + randDouble(generator) + 1;
@@ -311,14 +313,18 @@ double Agent::getReward(std::vector<double> rewards, int turn, double bonus){
             // seekers get the tile reward - 1 for every turn until they dicover the hider
             newReward = rewards[X*10+Y] + randDouble(generator) - 1;
         }
-    }else{
+    }else if (turn == hiderFoundTurn){
+        // in the turn the hider was found
         if (type == 0){
-            // hider gets a penalty when it's discovered
-            newReward = rewards[X*10+Y] + randDouble(generator) - bonus;
+            // hider gets a penalty 
+            newReward = rewards[X*10+Y] + randDouble(generator) - 10;
         }else{
-            // seeker gets bonus when it discovers the hider
-            newReward = rewards[X*10+Y] + randDouble(generator) + bonus;
+            // seeker gets bonus 
+            newReward = rewards[X*10+Y] + randDouble(generator) + 10;
         }
+    }else{
+        // after the hider was found, agents receive the rewards according to their location
+        newReward = rewards[X*10+Y] + randDouble(generator);
     }
     estimates[X*10+Y] += (double)(1.0/(turn+1.0)) * (newReward - estimates[X*10+Y]);
     //printEstimates();

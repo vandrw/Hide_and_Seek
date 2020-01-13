@@ -83,30 +83,22 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
     int hiderDiscover = 0;
 
-    int    flag = 0;
-    double bonus = 0; 
-
     int    baseX = seeker.getX_Coord();
     int    baseY = seeker.getY_Coord();
     
-    // Sets to -1 the turn when the hider is found
 
     for (int turn = 0; turn < turnsPerGame; turn ++) {
         turnNum++;
 
         if (seeker.hasWon(baseX, baseY)){
             gRes.wonBySeeker = 1;
-
             gRes.endTurn = turn - 1;
-
             return gRes;
         }
 
         if (hider.hasWon (baseX, baseY)){
             gRes.wonBySeeker = 0;
-
             gRes.endTurn = turn - 1;
-
             return gRes;
         }
 
@@ -121,42 +113,27 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
         hiderDiscover  = seeker.playTurn(epsilon, grid);
 
         // make the bonus 10 to reward/penalize agents
-        if (hiderDiscover != 0 && flag == 0){
-            flag = 1;
-            bonus = 20.0;
+        if (hiderDiscover == 1 && gRes.hiderFoundTurn == 0){
             gRes.hiderFoundTurn = turn;
             hider.discovered = 1;   // hider was discovered
             seeker.discovered = 1;  // seeker has discovered the hider
-
             gRes.hiderFound = 1;
         }
 
-        if (flag == 0 || flag == 1) {
+        if (turn <= gRes.hiderFoundTurn) {
 
-            gRes.totalRewardSeeker += seeker.getReward(rewardsSeeker, turn, bonus);
-            // if in the last turn the hider was not found, he wins and gets a reward
-            if (hider.discovered == 0 && turn == (turnsPerGame - 1) ){ 
-                bonus = 10.0;
-                gRes.wonBySeeker = 0;
-            }
-
-            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, bonus);
+            gRes.totalRewardSeeker += seeker.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn);
 
         } else {
-            // Once the hider is dicovered, the goal for both players becomes to get to the base 
-            // (starting location of the seeker) first. So, the reward matrix changes. 
-            gRes.totalRewardHider  +=  hider.getReward(rewardsToBase, turn, bonus);
-            gRes.totalRewardSeeker += seeker.getReward(rewardsToBase, turn, bonus);
-        }
 
-        // set flag to -1 so the bonus will not become 10 if the hider is discovered again
-        if (flag == 1) {
-            flag = -1;
-            bonus = 0;
+            gRes.totalRewardHider  +=  hider.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardSeeker += seeker.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
         }
 
         //printSimulation(hider, seeker, gRes.hiderFound);
 
+        // reduce seeker's reward for going back to the same spots to encourage exploration
         rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
 
         if (hider.discovered == 1){
@@ -170,6 +147,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
     turnNum = 0;
 
     gRes.endTurn = turnsPerGame;
+    gRes.wonBySeeker = 0;
 
     return gRes;
 }
