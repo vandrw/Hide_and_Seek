@@ -41,6 +41,7 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
 
     initializeGrid(grid);
     initializeRewardsGrid(rewardsHider);
+    initializeRewardsGrid(rewardsSeeker);
 
     Agent  hider(0, grid);
     Agent seeker(1, grid);
@@ -82,7 +83,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
     gameResults gRes;
 
     int hiderDiscover = 0;
-
+    double reward;
     int    baseX = seeker.getX_Coord();
     int    baseY = seeker.getY_Coord();
 
@@ -104,8 +105,9 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
         if (turn < hiderAdvantage){
             hider.playTurn(epsilon, grid);
-            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn);
-            // printSimulation(hider, seeker, -1);
+            reward = hider.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardHider += reward;
+            hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
             continue;
         }
 
@@ -116,25 +118,32 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
             gRes.hiderFoundTurn = turn;
             hider.discovered = 1;   // hider was discovered
             seeker.discovered = 1;  // seeker has discovered the hider
-            gRes.hiderFound = 1;
+            gRes.hiderFound = 1;    // save turn when hider was found
         }
 
-        if (turn <= gRes.hiderFoundTurn) {
+        // if (turn <= gRes.hiderFoundTurn) {
+            
+            reward = seeker.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardSeeker += reward;
+            seeker.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
-            gRes.totalRewardSeeker += seeker.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
-            gRes.totalRewardHider += hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn);
+            reward = hider.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardHider += reward;
+            hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
-        } else {
+        // } else {
 
-            gRes.totalRewardHider  +=  hider.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
-            gRes.totalRewardSeeker += seeker.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
-        }
+        //     gRes.totalRewardHider  +=  hider.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
+        //     gRes.totalRewardSeeker += seeker.getReward(rewardsToBase, turn, gRes.hiderFoundTurn);
 
-        //printSimulation(hider, seeker, gRes.hiderFound);
+        // }
+
+        // printSimulation(hider, seeker, gRes.hiderFound);
 
         // reduce seeker's reward for going back to the same spots to encourage exploration
-        rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
+        // rewardsSeeker[seeker.X*10 + seeker.Y] -= 0.5;
 
+        // stop the game when the hider is found (until it works better)
         if (hider.discovered == 1){
             gRes.wonBySeeker = 1;
             gRes.endTurn = turn;

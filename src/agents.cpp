@@ -12,8 +12,18 @@ Agent::Agent(int t, std::vector<int> &grid) {
 
     type = t;                                   // Set agent type
     direction = randIntDirection(generator);    // Set random starting direction
-    if (type == 0){ estimates.resize(100, 0.0); } // Resize array with observed rewards
-    if (type == 1){ estimates.resize(100, 5.0); } // The seeker's array gets initialized with optimistic
+    if (type == 0){ 
+        estimates.resize(100);
+        for (int i = 0; i < 100; i ++){
+            estimates[i].resize(4,0.0);
+        } 
+    } // Resize array with observed rewards
+    if (type == 1){ 
+        estimates.resize(100);
+        for (int i = 0; i < 100; i ++){
+            estimates[i].resize(4,0.0);
+        }  
+    } // The seeker's array gets initialized with optimistic
                                                 // Initial values to encourage exploration
 
     int x_hider, y_hider;
@@ -59,7 +69,7 @@ void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
         case 3:         // WEST
             Y--;
             break;
-        case 5:         // Do nothing because agent is blocked (by another agent)
+        case 4:         // Do nothing because agent is blocked (by another agent)
             break;     
     }
     // chance the direction in which the agent is looking accordingly
@@ -106,7 +116,7 @@ int Agent::decideRandomly(std::vector<int> grid){
     uniform_int_distribution<int> randInt(0, 3);
     int action;
     if (isBlocked(grid)){   // If agent is blocked, do nothing
-            return 5;
+            return 4;
     }
     do{ 
         action = randInt(generator);
@@ -120,7 +130,7 @@ int Agent::decide(double epsilon, std::vector<int> grid){
     uniform_int_distribution<int> randInt(0, 3);
     int decision;
     if (isBlocked(grid)) {
-        return 5;
+        return 4;
     }
     if (randDouble(generator) > 1-epsilon){
         return decideRandomly(grid);
@@ -268,20 +278,21 @@ int Agent::bestDirection(std::vector<int> grid){
     double max;
     std::vector<double> values (5, 0);
 
-    if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[(X-1)*10+Y];} else {values[0] = -10000;}
-    if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y+1];} else {values[1] = -10000;}
-    if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[(X+1)*10+Y];} else {values[2] = -10000;}
-    if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y-1];} else {values[3] = -10000;}
-    values[4] = grid[X*10 + Y];
+    if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[X*10+Y][0];} else {values[0] = -10000;}
+    if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y][1];} else {values[1] = -10000;}
+    if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[X*10+Y][2];} else {values[2] = -10000;}
+    if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y][3];} else {values[3] = -10000;}
+    values[4] = estimates[X*10 + Y][4];
 
     max = values[4];
-    direction = 5;
+    direction = 4;
     for (int i = 0; i < 4; i++){
         if (max < values[i]){
             max = values[i];
             direction = i;
         }
     }
+
     return direction;
 
 }
@@ -289,11 +300,11 @@ int Agent::bestDirection(std::vector<int> grid){
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    // if (type == 0){
-    //     action = decideRandomly(grid);
-    // }else{
+    if (type == 0){ // Hider random
+        action = decideRandomly(grid);
+    }else{
         action = decide(epsilon, grid);
-    //}
+    }
     act(action, grid, epsilon);
     return findAgent(grid);
 }
@@ -326,15 +337,25 @@ double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTur
         // after the hider was found, agents receive the rewards according to their location
         newReward = rewards[X*10+Y] + randDouble(generator);
     }
-    estimates[X*10+Y] += (double)(1.0/(turn+1.0)) * (newReward - estimates[X*10+Y]);
+    // For SARSA estimates are updated later in makeGame(...)
+    //estimates[X*10+Y] += (double)(1.0/(turn+1.0)) * (newReward - estimates[X*10+Y]);
     //printEstimates();
     return newReward;
 }
 
-void Agent::printEstimates(){
-    for (int i = 0;i<10;i++){
-        for(int j=0; j<10; j++){
-            cout << estimates[i*10+j] << " ";
+void Agent::updateEstimates(double reward, double alpha, double gamma, double epsilon, std::vector<int> grid){
+    int nextAction = bestDirection(grid);
+    double nextEstimate = estimates[X*10+Y][decide(epsilon, grid)];
+    estimates[X*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y][direction]);
+    // cout << "newReward = " << reward << ", ";
+    // cout << "next estimate = " << nextEstimate << ", ";
+    // cout << "new estimate = " << estimates[X*10+Y][direction] << "\n";
+}
+
+ void Agent::printEstimates(){
+    for (int i = 0;i<100;i++){
+        for(int j=0; j<4; j++){
+            cout << estimates[i][j] << " ";
         }
         cout << "\n";
     }
