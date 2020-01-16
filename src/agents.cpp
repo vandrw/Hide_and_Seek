@@ -8,23 +8,24 @@ using namespace std;
 Agent::Agent(int t, std::vector<int> &grid) {
     random_device generator;
     uniform_int_distribution<int> randInt(0, 9);
-    uniform_int_distribution<int> randIntDirection(0, 3);
+   // uniform_int_distribution<int> randIntDirection(0, 3);
 
-    type = t;                                   // Set agent type
-    direction = randIntDirection(generator);    // Set random starting direction
+    type = t;                                    // Set agent type
+  // direction = randIntDirection(generator);    // Set random starting direction
+    direction = 4;                               
     if (type == 0){ 
         estimates.resize(100);
         for (int i = 0; i < 100; i ++){
-            estimates[i].resize(4,0.0);
+            estimates[i].resize(5,0.0);
         } 
-    } // Resize array with observed rewards
+    } 
     if (type == 1){ 
         estimates.resize(100);
         for (int i = 0; i < 100; i ++){
-            estimates[i].resize(4,0.0);
+            estimates[i].resize(5,5.0);         // Optimal initial values for seeker
         }  
-    } // The seeker's array gets initialized with optimistic
-                                                // Initial values to encourage exploration
+    } 
+                                              
 
     int x_hider, y_hider;
 
@@ -74,6 +75,9 @@ void Agent::act(int dir, std::vector<int> &grid, double epsilon) {
     }
     // chance the direction in which the agent is looking accordingly
     direction = dir;
+    // if (type == 1){
+    //     cout << direction << "\n";
+    // }
     grid[X * 10 + Y] = type + 2;
 }
 
@@ -258,6 +262,19 @@ int Agent::findAgentWest(std::vector<int> grid){
     return 0;   
 }
 
+int Agent::findAgentAllDirections(std::vector<int> grid){
+    int found = 0;
+    for (int i = 0; i < 4; i++){
+        direction = i;
+        found = findAgentNorth(grid);
+        if (found != 0){
+            break;
+        } 
+    }
+    direction = 4;
+    return found;
+}
+
 int Agent::findAgent(std::vector<int> grid){
     switch (direction) {
         case 0:         // NORTH
@@ -268,6 +285,8 @@ int Agent::findAgent(std::vector<int> grid){
             return findAgentSouth(grid);
         case 3:         // WEST
             return findAgentWest(grid);
+        case 4:
+            return findAgentAllDirections(grid);
         default:
             return 0;
     }
@@ -284,15 +303,34 @@ int Agent::bestDirection(std::vector<int> grid){
     if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y][3];} else {values[3] = -10000;}
     values[4] = estimates[X*10 + Y][4];
 
-    max = values[4];
-    direction = 4;
-    for (int i = 0; i < 4; i++){
-        if (max < values[i]){
-            max = values[i];
-            direction = i;
+    // encourage seeker to move
+    if (type == 1){
+        max = values[0];
+        direction = 0;            
+        //cout << "direction " << 0 << " estimate " << values[0] << " "; 
+        for (int i = 1; i < 5; i++){
+            //cout << "direction " << i << " estimate " << values[i] << " "; 
+            if (max < values[i]){
+                max = values[i];
+                direction = i;
+            }
         }
+        //cout << " choice " << direction << "\n";
+    // encourage hider to stay
+    }else{
+        max = values[4];
+        direction = 4;
+        for (int i = 0; i < 4; i++){
+           // cout << "direction " << i << " estimate " << values[i] << " "; 
+            if (max < values[i]){
+                max = values[i];
+                direction = i;
+            }
+        }
+       // cout << "direction " << 4 << " estimate " << values[4] << " "; 
+       // cout << " choice " << direction << "\n";
     }
-
+    
     return direction;
 
 }
@@ -300,7 +338,7 @@ int Agent::bestDirection(std::vector<int> grid){
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    if (type == 0){ // Hider random
+    if (type == 0){                     // Hider is random
         action = decideRandomly(grid);
     }else{
         action = decide(epsilon, grid);
@@ -346,7 +384,22 @@ double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTur
 void Agent::updateEstimates(double reward, double alpha, double gamma, double epsilon, std::vector<int> grid){
     int nextAction = bestDirection(grid);
     double nextEstimate = estimates[X*10+Y][decide(epsilon, grid)];
-    estimates[X*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y][direction]);
+    if (direction == 0){
+        estimates[(X+1)*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[(X+1)*10+Y][direction]);
+    }
+    if (direction == 1){
+        estimates[X*10+Y-1][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y-1][direction]);
+    }
+    if (direction == 2){
+        estimates[(X-1)*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[(X-1)*10+Y][direction]);
+    }
+    if (direction == 3){
+        estimates[X*10+Y+1][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y+1][direction]);
+    }
+    if (direction == 4){
+        estimates[X*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y][direction]);
+    }
+    
     // cout << "newReward = " << reward << ", ";
     // cout << "next estimate = " << nextEstimate << ", ";
     // cout << "new estimate = " << estimates[X*10+Y][direction] << "\n";

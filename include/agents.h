@@ -27,6 +27,7 @@ class Agent {
     int findAgentSouth(std::vector<int> grid);
     int findAgentEast(std::vector<int> grid);
     int findAgentWest(std::vector<int> grid);
+    int findAgentAllDirections(std::vector<int> grid);
     int findAgent(std::vector<int> grid);
 
     int bestDirection(std::vector<int> grid);

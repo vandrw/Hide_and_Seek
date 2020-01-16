@@ -41,7 +41,7 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
 
     initializeGrid(grid);
     initializeRewardsGrid(rewardsHider);
-    initializeRewardsGrid(rewardsSeeker);
+    //initializeRewardsGrid(rewardsSeeker);
 
     Agent  hider(0, grid);
     Agent seeker(1, grid);
@@ -127,9 +127,9 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
             gRes.totalRewardSeeker += reward;
             seeker.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
-            reward = hider.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
-            gRes.totalRewardHider += reward;
-            hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
+            // reward = hider.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
+            // gRes.totalRewardHider += reward;
+            // hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
         // } else {
 
@@ -141,7 +141,7 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
         // printSimulation(hider, seeker, gRes.hiderFound);
 
         // reduce seeker's reward for going back to the same spots to encourage exploration
-        // rewardsSeeker[seeker.X*10 + seeker.Y] -= 0.5;
+        rewardsSeeker[seeker.X*10 + seeker.Y] -= 0.1;
 
         // stop the game when the hider is found (until it works better)
         if (hider.discovered == 1){
@@ -155,13 +155,19 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
     turnNum = 0;
 
     gRes.endTurn = turnsPerGame;
-    gRes.wonBySeeker = 0;
-
+    // IF THE WINNING CONDITION IS NOT MET, THEN : 
+    // if the game ends and the hider was not found, the hider wins
+    if ( hider.discovered == 0){
+        gRes.wonBySeeker = 0;
+    // if the game ends and the hider was found the seeker wins
+    }else{
+        gRes.wonBySeeker = 1;
+    }
     return gRes;
 }
 
 void Simulation::printSimulation(Agent hider, Agent seeker, int hiderFound) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     system("clear");
 
     cout << "Simulation " << simNum <<"\n";
