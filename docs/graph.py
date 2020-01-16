@@ -13,13 +13,17 @@ filename = "logs.csv"
 
 data = pd.read_csv("data/" + filename)
 
-meanDataHider = data.groupby("Game", axis=0)["Average Reward Hider"].mean()
-meanDataSeeker = data.groupby("Game", axis=0)["Average Reward Seeker"].mean()
+dataByGame = data.groupby("Game", axis=0)
+
+plotRew = plt.figure(1)
+
+meanDataHider = dataByGame["Average Reward Hider"].mean()
+meanDataSeeker = dataByGame["Average Reward Seeker"].mean()
 
 plt.plot(meanDataHider, label="Hider")
 plt.plot(meanDataSeeker, label="Seeker")
 
-plt.title("Average rewards obtained by the agents")
+plt.title("Mean Rewards Obtained by the Agents")
 plt.xlabel("Time")
 plt.ylabel("Average reward")
 
@@ -27,3 +31,59 @@ plt.grid()
 plt.legend()
 
 plt.savefig('docs/rewards.png')
+
+plotWins = plt.figure(2)
+
+meanWins = dataByGame["Seeker Won"].mean()
+
+plt.plot(meanWins)
+
+plt.title("Mean Win of Seeker per game")
+plt.xlabel("Time")
+plt.ylabel("Win rate (%)")
+
+plt.grid()
+
+plt.savefig("docs/wins.png")
+
+plotEndTurn = plt.figure(3)
+
+meanEndTurn = dataByGame["End Turn"].mean()
+
+plt.plot(meanEndTurn)
+
+plt.title("Mean End Turn per Game")
+plt.xlabel("Time")
+plt.ylabel("End Turn")
+
+plt.grid()
+
+plt.savefig("docs/endturn.png")
+
+plotEndTurn = plt.figure(4)
+
+meanEndTurn = dataByGame["Hider Discovered"].mean()
+
+plt.plot(meanEndTurn)
+
+plt.title("Mean Discovery of Hider per Game")
+plt.xlabel("Time")
+plt.ylabel("Discovery rate (%)")
+
+plt.grid()
+
+plt.savefig("docs/hiderdisc.png")
+
+plotEndTurn = plt.figure(5)
+
+meanEndTurn = dataByGame["Hider Found Turn"].mean()
+
+plt.plot(meanEndTurn)
+
+plt.title("Mean Turn of Hider Found per Game")
+plt.xlabel("Time")
+plt.ylabel("Turn of Hider Found")
+
+plt.grid()
+
+plt.savefig("docs/foundturn.png")
