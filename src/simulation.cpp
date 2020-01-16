@@ -127,9 +127,9 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
             gRes.totalRewardSeeker += reward;
             seeker.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
-            // reward = hider.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn);
-            // gRes.totalRewardHider += reward;
-            // hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
+            reward = hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn);
+            gRes.totalRewardHider += reward;
+            hider.updateEstimates(reward, alpha, gamma, epsilon, grid);
 
         // } else {
 

@@ -338,7 +338,7 @@ int Agent::bestDirection(std::vector<int> grid){
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    if (type == 0){                     // Hider is random
+    if (type == 1){                     // Seeker is random
         action = decideRandomly(grid);
     }else{
         action = decide(epsilon, grid);
@@ -362,7 +362,7 @@ double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTur
             // seekers get the tile reward - 1 for every turn until they dicover the hider
             newReward = rewards[X*10+Y] + randDouble(generator) - 1;
         }
-    }else if (turn == hiderFoundTurn){
+    }else if (turn == hiderFoundTurn && discovered == 1){
         // in the turn the hider was found
         if (type == 0){
             // hider gets a penalty 
