@@ -48,6 +48,32 @@ void initializeRewardsGrid(std::vector<double> &rewards) {
                 0,  0,  1, -1, 0,  0,  0,  0,  0,  0    }; 
 }
 
+void initializeZerosArray(std::vector<double> &rewards) {
+    for (int i = 0; i<10; i++){
+        for(int j = 0; j<10; j++){
+            rewards[i*10+j] = 0.0;
+        }
+    }
+}
+
+void initializeZerosEstimates(std::vector<std::vector<double>> &estimates){
+    for (int i = 0; i< 100; i ++){
+        for(int j=0; j<5; j++){
+            estimates[i][j] = 0;
+        }
+    }
+}
+
+void printArray(std::vector<double> array){
+    for (int i = 0; i < 10; i++){
+        for (int j = 0; j < 10; j++){
+            cout << array[i*10 + j] << " ";
+        }
+        cout << "\n";
+    }
+    cout << " \n";
+}
+
 
 void initializeRewardsToBase(std::vector<double> &rewardsToBase, int baseX, int baseY) {
     // Rewards are equal to (18 - Manhattan distance between tile and base)/6

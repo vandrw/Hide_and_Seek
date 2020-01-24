@@ -34,7 +34,7 @@ class Agent {
 
     int playTurn(double epsilon, std::vector<int> &grid);
 
-    double getReward(std::vector<double> rewards, int turn, int hiderFoundTurn);
+    double getReward(std::vector<double> rewards, int turn, int hiderFoundTurn, int maxTurn);
     void updateEstimates(double reward, double alpha, double gamma, double epsilon, std::vector<int> grid);
 
     int getX_Coord();

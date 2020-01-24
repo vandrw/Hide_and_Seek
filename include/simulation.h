@@ -27,13 +27,13 @@ class Simulation {
     public:
 
     // Hyper-parameters
-    double epsilon        = 0.2;
-    double alpha          = 0.1;
-    double gamma          = 0.1;
+    double epsilon        = 0.1;
+    double alpha          = 0.01;
+    double gamma          = 0.01;
     int    hiderAdvantage = 50;
 
     // Experiment parameters
-    int    simPerExperiment   = 10;                  // 1000  Number of simulations in an experiment run.
+    int    simPerExperiment   = 50;                  // 1000  Number of simulations in an experiment run.
     int    gamesPerSimulation = 1000;                 // 10000 Number of games in a simulation.
     int    turnsPerGame       = 200;                  // 200   Number of turns in a Game.
 

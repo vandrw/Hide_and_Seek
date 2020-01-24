@@ -22,7 +22,7 @@ Agent::Agent(int t, std::vector<int> &grid) {
     if (type == 1){ 
         estimates.resize(100);
         for (int i = 0; i < 100; i ++){
-            estimates[i].resize(5,5.0);         // Optimal initial values for seeker
+            estimates[i].resize(5,0.0);         // Optimal initial values for seeker
         }  
     } 
                                               
@@ -103,6 +103,8 @@ int Agent::checkForWall(int direction, std::vector<int> grid){
                  (grid[X * 10 + Y - 1] == 0)
                ) { return 1;}
             break;
+        case 4:         // Agent doesn't move, so it is not blocked by a wall
+            break;
     }
     return 0;
 }
@@ -117,7 +119,7 @@ int Agent::isBlocked(std::vector<int> grid){
 
 int Agent::decideRandomly(std::vector<int> grid){
     random_device generator;
-    uniform_int_distribution<int> randInt(0, 3);
+    uniform_int_distribution<int> randInt(0, 4);
     int action;
     if (isBlocked(grid)){   // If agent is blocked, do nothing
             return 4;
@@ -304,32 +306,32 @@ int Agent::bestDirection(std::vector<int> grid){
     values[4] = estimates[X*10 + Y][4];
 
     // encourage seeker to move
-    if (type == 1){
+    //if (type == 1){
         max = values[0];
         direction = 0;            
-        //cout << "direction " << 0 << " estimate " << values[0] << " "; 
+       // cout << "direction " << 0 << " estimate " << values[0] << " "; 
         for (int i = 1; i < 5; i++){
-            //cout << "direction " << i << " estimate " << values[i] << " "; 
+       //     cout << "direction " << i << " estimate " << values[i] << " "; 
             if (max < values[i]){
                 max = values[i];
                 direction = i;
             }
         }
-        //cout << " choice " << direction << "\n";
-    // encourage hider to stay
-    }else{
-        max = values[4];
-        direction = 4;
-        for (int i = 0; i < 4; i++){
-           // cout << "direction " << i << " estimate " << values[i] << " "; 
-            if (max < values[i]){
-                max = values[i];
-                direction = i;
-            }
-        }
-       // cout << "direction " << 4 << " estimate " << values[4] << " "; 
        // cout << " choice " << direction << "\n";
-    }
+    // encourage hider to stay
+    // }else{
+    //     max = values[4];
+    //     direction = 4;
+    //     for (int i = 0; i < 4; i++){
+    //        // cout << "direction " << i << " estimate " << values[i] << " "; 
+    //         if (max < values[i]){
+    //             max = values[i];
+    //             direction = i;
+    //         }
+    //     }
+    //    // cout << "direction " << 4 << " estimate " << values[4] << " "; 
+    //    // cout << " choice " << direction << "\n";
+    // }
     
     return direction;
 
@@ -348,18 +350,19 @@ int Agent::playTurn(double epsilon, std::vector<int> &grid){
 }
 
 
-double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTurn){
+double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTurn, int maxTurn){
     random_device generator;
     uniform_real_distribution<double> randDouble(-1, 1);
     double newReward;
-   
-    if (hiderFoundTurn == 0){
+    
+    if (discovered == 0){
         // before the hider was discovered
         if (type == 0){
             // hiders get the tile reward + 1 for every turn they are not discovered 
             newReward = rewards[X*10+Y] + randDouble(generator) + 1;
         }else{
             // seekers get the tile reward - 1 for every turn until they dicover the hider
+            // cout << "before " << rewards[X*10+Y] << "\n";
             newReward = rewards[X*10+Y] + randDouble(generator) - 1;
         }
     }else if (turn == hiderFoundTurn && discovered == 1){
@@ -369,15 +372,23 @@ double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTur
             newReward = rewards[X*10+Y] + randDouble(generator) - 10;
         }else{
             // seeker gets bonus 
+            // cout << "bonus ";
             newReward = rewards[X*10+Y] + randDouble(generator) + 10;
         }
+    }else if(turn == maxTurn-1 && discovered == 1 && type == 1){
+        newReward = rewards[X*10+Y] + randDouble(generator) + 10;
+        // cout << "final turn ";
+    }else if (turn == maxTurn-1 && discovered == 0 && type == 0){
+        newReward = rewards[X*10+Y] + randDouble(generator) + 10;
     }else{
         // after the hider was found, agents receive the rewards according to their location
         newReward = rewards[X*10+Y] + randDouble(generator);
     }
     // For SARSA estimates are updated later in makeGame(...)
     //estimates[X*10+Y] += (double)(1.0/(turn+1.0)) * (newReward - estimates[X*10+Y]);
-    //printEstimates();
+    // if (type == 1){
+    //     cout << "reward for seeker = " << newReward << " in turn "<< turn << "\n";
+    // }
     return newReward;
 }
 
@@ -407,7 +418,7 @@ void Agent::updateEstimates(double reward, double alpha, double gamma, double ep
 
  void Agent::printEstimates(){
     for (int i = 0;i<100;i++){
-        for(int j=0; j<4; j++){
+        for(int j=0; j<5; j++){
             cout << estimates[i][j] << " ";
         }
         cout << "\n";

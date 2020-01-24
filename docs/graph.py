@@ -3,6 +3,7 @@ mpl.use('Agg')
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import os
 
 
@@ -25,7 +26,8 @@ plt.plot(meanDataSeeker, label="Seeker")
 
 plt.title("Mean Rewards Obtained by the Agents")
 plt.xlabel("Time")
-plt.ylabel("Average reward")
+plt.ylabel("Average reward") 
+
 
 plt.grid()
 plt.legend()
@@ -76,8 +78,11 @@ plt.savefig("docs/hiderdisc.png")
 
 plotEndTurn = plt.figure(5)
 
-meanEndTurn = dataByGame["Hider Found Turn"].mean()
+# hiderFoundGames = sum(dataByGame['Hider Found Turn'] == "1")
+# meanEndTurn = dataByGame["Hider Found Turn"].sum()/hiderFoundGames
 
+
+meanEndTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean() 
 plt.plot(meanEndTurn)
 
 plt.title("Mean Turn of Hider Found per Game")
