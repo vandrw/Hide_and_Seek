@@ -72,22 +72,23 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
         seeker.setX_Coord(baseX);
         seeker.setY_Coord(baseY);
 
+        seeker.discovered = 0;
+        hider.discovered = 0;
         initializeZerosArray(rewardsSeeker);
-        //initializeZerosEstimates(seeker.estimates);
+        
     }
 
     gameNum = 0;
     
 }
 
-gameResults Simulation::makeGame( Agent hider, Agent seeker) {
+gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
     gameResults gRes;
 
     int hiderDiscover = 0;
     double reward;
     int    baseX = seeker.getX_Coord();
     int    baseY = seeker.getY_Coord();
-
 
     for (int turn = 0; turn < turnsPerGame; turn ++) {
         turnNum++;
@@ -146,13 +147,12 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
 
         }
 
-        //printSimulation(hider, seeker, gRes.hiderFound);
+        //printSimulation(hider, seeker, gRes.hiderFound, baseX, baseY);
 
         // reduce seeker's reward for going back to the same spots to encourage exploration
-        // if (seeker.discovered == 0){
-        //     rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
-        //     printArray(rewardsSeeker);
-        // }
+        if (seeker.discovered == 0){
+            rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
+        }
         // stop the game when the hider is found (until it works better)
         // if (hider.discovered == 1){
         //     gRes.wonBySeeker = 1;
@@ -173,16 +173,18 @@ gameResults Simulation::makeGame( Agent hider, Agent seeker) {
     }else{
         gRes.wonBySeeker = 1;
     }
+
+
     return gRes;
 }
 
-void Simulation::printSimulation(Agent hider, Agent seeker, int hiderFound) {
+void Simulation::printSimulation(Agent hider, Agent seeker, int hiderFound, int baseX, int baseY) {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     system("clear");
 
     cout << "Simulation " << simNum <<"\n";
 
-    printGrid(grid, hider, seeker);
+    printGrid(grid, hider, seeker, baseX, baseY);
 
     cout << "\nGame " << gameNum << " | Turn " << turnNum;
 
@@ -200,8 +202,13 @@ void Simulation::printScoresPerSimulation(std::ofstream& logs, gameResults gRes)
     logs << simNum << "," << gameNum << "," << gRes.endTurn 
          << "," << gRes.hiderFound << "," << gRes.hiderFoundTurn 
          << "," << gRes.wonBySeeker << "," 
-         << gRes.totalRewardHider / gRes.endTurn << ","
-         << gRes.totalRewardSeeker / (gRes.endTurn-50);
+         << gRes.totalRewardHider / gRes.endTurn << ",";
+         if (gRes.endTurn - 50 > 0){
+            logs << gRes.totalRewardSeeker / (gRes.endTurn-50);
+         }else{
+            logs << gRes.totalRewardSeeker;
+         }
+        
     
     logs << "\n";
 }

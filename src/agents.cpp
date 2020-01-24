@@ -306,12 +306,12 @@ int Agent::bestDirection(std::vector<int> grid){
     values[4] = estimates[X*10 + Y][4];
 
     // encourage seeker to move
-    //if (type == 1){
+    if (type == 1){
         max = values[0];
         direction = 0;            
-       // cout << "direction " << 0 << " estimate " << values[0] << " "; 
+        // cout << "direction " << 0 << " estimate " << values[0] << " "; 
         for (int i = 1; i < 5; i++){
-       //     cout << "direction " << i << " estimate " << values[i] << " "; 
+           // cout << "direction " << i << " estimate " << values[i] << " "; 
             if (max < values[i]){
                 max = values[i];
                 direction = i;
@@ -319,19 +319,19 @@ int Agent::bestDirection(std::vector<int> grid){
         }
        // cout << " choice " << direction << "\n";
     // encourage hider to stay
-    // }else{
-    //     max = values[4];
-    //     direction = 4;
-    //     for (int i = 0; i < 4; i++){
-    //        // cout << "direction " << i << " estimate " << values[i] << " "; 
-    //         if (max < values[i]){
-    //             max = values[i];
-    //             direction = i;
-    //         }
-    //     }
-    //    // cout << "direction " << 4 << " estimate " << values[4] << " "; 
-    //    // cout << " choice " << direction << "\n";
-    // }
+    }else{
+        max = values[4];
+        direction = 4;
+        for (int i = 0; i < 4; i++){
+           // cout << "direction " << i << " estimate " << values[i] << " "; 
+            if (max < values[i]){
+                max = values[i];
+                direction = i;
+            }
+        }
+       // cout << "direction " << 4 << " estimate " << values[4] << " "; 
+       // cout << " choice " << direction << "\n";
+    }
     
     return direction;
 
@@ -340,11 +340,11 @@ int Agent::bestDirection(std::vector<int> grid){
 
 int Agent::playTurn(double epsilon, std::vector<int> &grid){
     int action;
-    if (type == 1){                     // Seeker is random
-        action = decideRandomly(grid);
-    }else{
+    //if (type == 1){                     // Seeker is random
+    //    action = decideRandomly(grid);
+    //}else{
         action = decide(epsilon, grid);
-    }
+    //}
     act(action, grid, epsilon);
     return findAgent(grid);
 }
@@ -425,6 +425,22 @@ void Agent::updateEstimates(double reward, double alpha, double gamma, double ep
     }
     cout <<"\n";
 }
+
+ void Agent::printEstimatesMean(){
+    double sum;
+    for (int k = 0; k < 10; k++ ){
+        for (int i = 0;i<10;i++){
+            sum = 0;
+            for(int j=0; j<5; j++){
+                sum += estimates[k*10+i][j];
+            }
+            cout << sum/5 << " ";
+        }
+        cout<< "\n";
+    }
+    cout <<"\n";
+}
+
 
 int Agent::getX_Coord() {
     return X;

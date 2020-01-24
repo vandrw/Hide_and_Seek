@@ -41,6 +41,7 @@ class Agent {
     int getY_Coord();
     int getDirection();
     void printEstimates();
+    void printEstimatesMean();
 
     void setX_Coord(int x_coord);
     void setY_Coord(int y_coord);

@@ -25,7 +25,7 @@ plt.plot(meanDataHider, label="Hider")
 plt.plot(meanDataSeeker, label="Seeker")
 
 plt.title("Mean Rewards Obtained by the Agents")
-plt.xlabel("Time")
+plt.xlabel("Game")
 plt.ylabel("Average reward") 
 
 
@@ -41,7 +41,7 @@ meanWins = dataByGame["Seeker Won"].mean()
 plt.plot(meanWins)
 
 plt.title("Mean Win of Seeker per game")
-plt.xlabel("Time")
+plt.xlabel("Game")
 plt.ylabel("Win rate (%)")
 
 plt.grid()
@@ -55,7 +55,7 @@ meanEndTurn = dataByGame["End Turn"].mean()
 plt.plot(meanEndTurn)
 
 plt.title("Mean End Turn per Game")
-plt.xlabel("Time")
+plt.xlabel("Game")
 plt.ylabel("End Turn")
 
 plt.grid()
@@ -69,7 +69,7 @@ meanEndTurn = dataByGame["Hider Discovered"].mean()
 plt.plot(meanEndTurn)
 
 plt.title("Mean Discovery of Hider per Game")
-plt.xlabel("Time")
+plt.xlabel("Game")
 plt.ylabel("Discovery rate (%)")
 
 plt.grid()
@@ -86,7 +86,7 @@ meanEndTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean()
 plt.plot(meanEndTurn)
 
 plt.title("Mean Turn of Hider Found per Game")
-plt.xlabel("Time")
+plt.xlabel("Game")
 plt.ylabel("Turn of Hider Found")
 
 plt.grid()

@@ -27,15 +27,15 @@ class Simulation {
     public:
 
     // Hyper-parameters
-    double epsilon        = 0.1;
-    double alpha          = 0.01;
-    double gamma          = 0.01;
+    double epsilon        = 0.2;
+    double alpha          = 0.1;
+    double gamma          = 0.1;
     int    hiderAdvantage = 50;
 
     // Experiment parameters
-    int    simPerExperiment   = 50;                  // 1000  Number of simulations in an experiment run.
-    int    gamesPerSimulation = 1000;                 // 10000 Number of games in a simulation.
-    int    turnsPerGame       = 200;                  // 200   Number of turns in a Game.
+    int    simPerExperiment   = 1000;                  // 1000  Number of simulations in an experiment run.
+    int    gamesPerSimulation = 15000;                 // 10000 Number of games in a simulation.
+    int    turnsPerGame       = 250;                  // 200   Number of turns in a Game.
 
     std::vector<int>    grid;                         // The grid where the agents play.
 
@@ -50,9 +50,9 @@ class Simulation {
 
     void makeExperiment();
     void makeSimulation(std::ofstream& logs, experimentResults &eRes);
-    gameResults  makeGame(Agent hider, Agent seeker);
+    gameResults  makeGame(Agent &hider, Agent &seeker);
 
-    void printSimulation(Agent hider, Agent seeker, int hiderFound);
+    void printSimulation(Agent hider, Agent seeker, int hiderFound, int baseX, int baseY);
     void printScoresPerSimulation(std::ofstream& logs, gameResults gRes);
     void adjustSize (experimentResults &eRes);
     void transferGameResults(gameResults gRes, experimentResults &eRes, int i);

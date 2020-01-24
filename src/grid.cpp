@@ -112,7 +112,7 @@ void addDirection(std::vector<int> grid, std::vector<int> &grd, Agent hider, Age
     }
 }
 
-void printGrid(std::vector<int> grid, Agent hider, Agent seeker) {
+void printGrid(std::vector<int> grid, Agent hider, Agent seeker, int baseX, int baseY) {
 
     std::vector<int> grd = grid;
 
@@ -125,13 +125,18 @@ void printGrid(std::vector<int> grid, Agent hider, Agent seeker) {
 
     addDirection(grid, grd, hider, seeker);
     
-    for (int i=0; i<=20; i++) { cout << "_";}
+    for (int i=0; i<=20; i++) { cout << "-";}
 
     cout << "\n";
 
     for (int i=0; i<10; i++) {
         cout << "|";
         for (int j=0; j<10; j++) {
+            if (i == baseX && j == baseY){
+                cout << "B";
+                if (j != 9) {cout << " ";}
+                continue;
+            }
             switch (grd[i*10 + j]) {
                 case 0:             // Empty space           
                     cout << " ";
