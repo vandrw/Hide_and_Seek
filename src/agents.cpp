@@ -5,27 +5,23 @@
 
 using namespace std;
 
-Agent::Agent(int t, std::vector<int> &grid) {
+Agent::Agent(int t, int expStrategy, double initialValue, std::vector<int> &grid) {
     random_device generator;
     uniform_int_distribution<int> randInt(0, 9);
    // uniform_int_distribution<int> randIntDirection(0, 3);
 
+    exploration = expStrategy;
     type = t;                                    // Set agent type
-  // direction = randIntDirection(generator);    // Set random starting direction
-    direction = 4;                               
-    if (type == 0){ 
-        estimates.resize(100);
-        for (int i = 0; i < 100; i ++){
-            estimates[i].resize(5,0.0);
-        } 
+    direction = 4;                               // Default starting direction     
+
+    estimates.resize(100);
+    preferences.resize(100);
+    meanRewards.resize(100);
+    for (int i = 0; i < 100; i ++){
+        estimates[i].resize(5, initialValue);
+        preferences[i].resize(5, 0.0);
     } 
-    if (type == 1){ 
-        estimates.resize(100);
-        for (int i = 0; i < 100; i ++){
-            estimates[i].resize(5,0.0);         // Optimal initial values for seeker
-        }  
-    } 
-                                              
+
 
     int x_hider, y_hider;
 
@@ -115,33 +111,6 @@ int Agent::isBlocked(std::vector<int> grid){
             return 1;
         } 
     return 0;
-}
-
-int Agent::decideRandomly(std::vector<int> grid){
-    random_device generator;
-    uniform_int_distribution<int> randInt(0, 4);
-    int action;
-    if (isBlocked(grid)){   // If agent is blocked, do nothing
-            return 4;
-    }
-    do{ 
-        action = randInt(generator);
-    }   while(!checkForWall(action, grid));
-    return action;   
-}
-
-int Agent::decide(double epsilon, std::vector<int> grid){
-    random_device generator;
-    uniform_real_distribution<double> randDouble(0,1);
-    uniform_int_distribution<int> randInt(0, 3);
-    int decision;
-    if (isBlocked(grid)) {
-        return 4;
-    }
-    if (randDouble(generator) > 1-epsilon){
-        return decideRandomly(grid);
-    }
-    return bestDirection(grid);
 }
 
 int Agent::findAgentNorth(std::vector<int> grid){
@@ -337,15 +306,131 @@ int Agent::bestDirection(std::vector<int> grid){
 
 }
 
+std::vector<double> Agent::computeProbabilities(std::vector<int> grid){
+    std::vector<double> probabilities;
+    probabilities.resize(5, 0.0);
+    double sum = 0;
+    // only take into account actions that are "legal"
+    for (int i=0; i < 5; i++){
+        if (checkForWall(i, grid)){
+            probabilities[i] = exp(preferences[X*10+Y][i]);
+            sum += probabilities[i];
+        }else{
+            probabilities[i] = -999999;
+        }
+    }
+    for (int i = 0; i < 5; i++){
+        probabilities[i] /= sum;
+    }
+    return probabilities;    
+}
 
-int Agent::playTurn(double epsilon, std::vector<int> &grid){
+int Agent::getMaxIdx(std::vector<double> probabilities){
+    // action 4 is always safe to take, especially for hiders
+    int idx = 4; 
+    int max = probabilities[4];
+    for(int i = 0; i < 4; i++){
+        if (type == 0 && probabilities[i] > max){
+            max = probabilities[i];
+            idx = i;
+        }
+        if ( type == 1 && probabilities[i] >= max ){
+            max = probabilities[i];
+            idx = i;
+        }
+    }
+    return idx;
+}
+
+int Agent::reinforcementComparison(std::vector<int> grid){
+    random_device generator;
+    uniform_real_distribution<double> randProb(0, 1);
+    std::vector<double> probabilities = computeProbabilities(grid);
+    int bestAction = getMaxIdx(probabilities);
+    int choice;
+    if ( randProb(generator) < probabilities[bestAction]){
+        choice = bestAction;
+    }else{
+        choice = decideRandomly(grid);
+    }
+    return choice;
+}
+
+void Agent::updatePreferenceBeta(int action, double beta){
+    for (int i = 0; i < preferences.size(); i++){
+        if(i == action){
+            preferences[X*10+Y][i] += beta * (1 - preferences[X*10+Y][i]); 
+        }else{
+            preferences[X*10+Y][i] += beta * (0 - preferences[X*10+Y][i]); 
+        }
+    }
+}
+
+
+int Agent::pursuit(double beta, std::vector<int> grid){
+    random_device generator;
+    uniform_real_distribution<double> randProb(0, 1);
+    int maxAction = bestDirection(grid);
+    updatePreferenceBeta(maxAction, beta);
+    int mostProbableAction = getMaxIdx(preferences[X*10+Y]);
+    int choice;
+    if (randProb(generator) < preferences[X*10+Y][mostProbableAction]){
+        choice = mostProbableAction;
+    }else{
+        choice = decideRandomly(grid);
+    }
+    return choice;
+}
+
+int Agent::decideRandomly(std::vector<int> grid){
+    random_device generator;
+    uniform_int_distribution<int> randInt(0, 4);
     int action;
-    //if (type == 1){                     // Seeker is random
-    //    action = decideRandomly(grid);
-    //}else{
-        action = decide(epsilon, grid);
-    //}
+    if (isBlocked(grid)){   // If agent is blocked, do nothing
+            return 4;
+    }
+    do{ 
+        action = randInt(generator);
+    }   while(!checkForWall(action, grid));
+    return action;   
+}
+
+int Agent::epsilonGreedy(double epsilon, std::vector<int> grid){
+    random_device generator;
+    uniform_real_distribution<double> randDouble(0,1);
+    uniform_int_distribution<int> randInt(0, 3);
+    int decision;
+    if (randDouble(generator) > 1-epsilon){
+        return decideRandomly(grid);
+    }
+    return bestDirection(grid);
+}
+
+int Agent::decide(double beta, double epsilon, std::vector<int> grid){
+        // if the agent cannot is blocked, it can't move this turn
+        if (isBlocked(grid)) {
+            return 4;
+        }
+        switch (exploration) {
+        case 0:    // random    
+            return decideRandomly(grid);      
+        case 1:    // optimistic initial value uses best direction
+            return bestDirection(grid);
+        case 2:    // epsilon greedy
+            return epsilonGreedy(epsilon, grid);
+        case 3:
+            return reinforcementComparison(grid);
+        case 4:
+            return pursuit(beta, grid);
+    }
+}
+
+
+int Agent::playTurn(double beta, double epsilon, std::vector<int> &grid){
+    int action;
+    action = decide(beta, epsilon, grid);
     act(action, grid, epsilon);
+    // at the end of the turn, the agent looks for the other agent
     return findAgent(grid);
 }
 
@@ -392,28 +477,48 @@ double Agent::getReward(std::vector<double> rewards, int turn, int hiderFoundTur
     return newReward;
 }
 
-void Agent::updateEstimates(double reward, double alpha, double gamma, double epsilon, std::vector<int> grid){
-    int nextAction = bestDirection(grid);
-    double nextEstimate = estimates[X*10+Y][decide(epsilon, grid)];
+void Agent::updateMeanReward(double alphaExp, double newReward){
+    meanRewards[X*10+Y] += alphaExp * (newReward - meanRewards[X*10+Y]);
+}
+
+void Agent::updateEstimates(double reward, double alpha, double gamma, double epsilon, double alphaExp, double beta, std::vector<int> grid){
+    
+    int nextAction = decide(beta, epsilon, grid);
+    double nextEstimate = estimates[X*10+Y][nextAction];
+    
     if (direction == 0){
         estimates[(X+1)*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[(X+1)*10+Y][direction]);
+        if (exploration == 3){ 
+            preferences[(X-1)*10+Y][direction] += (double)1/preferences[(X-1)*10+Y].size() * (reward - meanRewards[(X-1)*10+Y]);
+        }
     }
     if (direction == 1){
         estimates[X*10+Y-1][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y-1][direction]);
+        if (exploration == 3){ 
+            preferences[X*10+Y-1][direction] += (double)1/preferences[X*10+Y-1].size() * (reward - meanRewards[X*10+Y-1]);
+        }
     }
     if (direction == 2){
         estimates[(X-1)*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[(X-1)*10+Y][direction]);
+        if (exploration == 3){ 
+            preferences[(X-1)*10+Y][direction] += (double)1/preferences[(X-1)*10+Y].size() * (reward - meanRewards[(X-1)*10+Y]);
+        }
     }
     if (direction == 3){
         estimates[X*10+Y+1][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y+1][direction]);
+        if (exploration == 3){ 
+            preferences[X*10+Y+1][direction] += (double)1/preferences[X*10+Y+1].size() * (reward - meanRewards[X*10+Y+1]);
+        }
     }
     if (direction == 4){
         estimates[X*10+Y][direction] += alpha * (reward + gamma * nextEstimate - estimates[X*10+Y][direction]);
+        if (exploration == 3){ 
+            preferences[X*10+Y][direction] += (double)1/preferences[X*10+Y].size() * (reward - meanRewards[X*10+Y]);
+        }
     }
-    
-    // cout << "newReward = " << reward << ", ";
-    // cout << "next estimate = " << nextEstimate << ", ";
-    // cout << "new estimate = " << estimates[X*10+Y][direction] << "\n";
+    if (exploration == 3){
+        updateMeanReward(alphaExp, reward);
+    }
 }
 
  void Agent::printEstimates(){

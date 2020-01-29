@@ -27,26 +27,33 @@ class Simulation {
     public:
 
     // Hyper-parameters
-    double epsilon        = 0.2;
-    double alpha          = 0.1;
-    double gamma          = 0.1;
-    int    hiderAdvantage = 50;
+    double epsilon        = 0.2; // epsilon greedy
+    double alpha          = 0.1; // param for q-learning
+    double gamma          = 0.1; // q-learning
+    double beta           = 0.1; // pursuit
+    double initialValue   = 0;   // optimistic initial values
+    double alphaExp       = 0.1; // used as param for reinforcement comparison
 
     // Experiment parameters
-    int    simPerExperiment   = 1000;                  // 1000  Number of simulations in an experiment run.
-    int    gamesPerSimulation = 15000;                 // 10000 Number of games in a simulation.
-    int    turnsPerGame       = 250;                  // 200   Number of turns in a Game.
+    int    simPerExperiment   = 20;                  // 1000  Number of simulations in an experiment run.
+    int    gamesPerSimulation = 500;                 // 10000 Number of games in a simulation.
+    int    turnsPerGame       = 200;                  // 200   Number of turns in a Game.
+    int    hiderAdvantage = 50;
+    int    seekerExploration = 2;
+    int    hiderExploration = 3;
+
 
     std::vector<int>    grid;                         // The grid where the agents play.
-
     std::vector<double> rewardsSeeker;                // Rewards for seeker in the grid.
     std::vector<double> rewardsHider;                 // Rewards for hider in the grid.
-    std::vector<double> rewardsToBase;                // Rewards that indicate the path to the base.
+    std::vector<double> rewardsToBaseHider;                // Rewards that indicate the path to the base.
+    std::vector<double> rewardsToBaseSeeker;
 
     // Current iteration
     int simNum  = 0;
     int gameNum = 0;
     int turnNum = 0;
+
 
     void makeExperiment();
     void makeSimulation(std::ofstream& logs, experimentResults &eRes);
