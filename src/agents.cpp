@@ -63,7 +63,7 @@ void Agent::reinitialize(double initialValue, std::vector<int> &grid) {
     X = randInt(generator);
     Y = randInt(generator);
 
-    while (grid[X * 10 + Y] != 0 && abs(X-x_hider) < 4 && abs(Y-y_hider) < 4) {
+    while (grid[X * 10 + Y] != 0 || abs(X-x_hider) < 4 || abs(Y-y_hider) < 4) {
         X = randInt(generator);     // Set appropriate X
         Y = randInt(generator);     // Set appropriate Y
     }
