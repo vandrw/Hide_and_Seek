@@ -21,7 +21,7 @@ The strategies are numbered as follows:
 
 0. Random
 1. Optimistic Initial Values
-2. $\epsilon$-Greedy
+2. <img src="https://render.githubusercontent.com/render/math?math=\epsilon">-Greedy
 3. Reinforcement Comparison
 4. Pursuit Methods
 5. Upper-Confidence-Bound
