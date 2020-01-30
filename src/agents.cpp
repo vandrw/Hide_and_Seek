@@ -18,7 +18,7 @@ Agent::Agent(int t, int expStrategy, double initialValue) {
     for (int i = 0; i < 100; i ++){
         estimates[i].resize(5, initialValue);
         preferences[i].resize(5, 0.0);
-        choiceCounter[i].resize(5, 0);
+        choiceCounter[i].resize(5, 1);
     }  
 }
 
@@ -32,7 +32,7 @@ void Agent::reinitialize(double initialValue, std::vector<int> &grid) {
     std::fill(meanRewards.begin(), meanRewards.end(), 0.0);
 
     for (int i = 0; i < 100; i ++){
-        std::fill(choiceCounter[i].begin(), choiceCounter[i].end(), 0);
+        std::fill(choiceCounter[i].begin(), choiceCounter[i].end(), 1);
         std::fill(estimates[i].begin(), estimates[i].end(), initialValue);
         std::fill(preferences[i].begin(), preferences[i].end(), 0.0);
     } 

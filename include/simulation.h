@@ -27,8 +27,8 @@ class Simulation {
     double exploreDegree  = 2;   // UCB
 
     // Experiment parameters
-    int    simPerExperiment   = 20;                  // 1000  Number of simulations in an experiment run.
-    int    gamesPerSimulation = 500;                 // 10000 Number of games in a simulation.
+    int    simPerExperiment   = 100;                  // 100  Number of simulations in an experiment run.
+    int    gamesPerSimulation = 5000;                 // 10000 Number of games in a simulation.
     int    turnsPerGame       = 200;                 // 200   Number of turns in a Game.
     int    hiderAdvantage     = 50;
 

@@ -186,18 +186,18 @@ int Agent::pursuit(double beta, std::vector<int> grid){
 
 
 int Agent::UCB(double exploreDegree, std::vector<int> grid) {
-    int dirMaxReward;
-    double rewardUCB, maxReward;
+    int dirMaxReward = 4;
+    double rewardUCB= 0, maxReward = -9999;
     std::vector<double> values (5, 0);
 
     if (isBlocked(grid)){   // If agent is blocked, do nothing
         return 4;
     }
 
-    if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[X*10+Y][0];} else {values[0] = -999999;}
-    if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y][1];} else {values[1] = -999999;}
-    if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[X*10+Y][2];} else {values[2] = -999999;}
-    if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y][3];} else {values[3] = -999999;}
+    if ( X-1 >= 0 && grid[(X-1)*10 + Y] == 0) {values[0] = estimates[X*10+Y][0];} else {values[0] = -9999999;}
+    if ( Y+1 < 10 && grid[X*10 + Y + 1] == 0) {values[1] = estimates[X*10+Y][1];} else {values[1] = -9999999;}
+    if ( X+1 < 10 && grid[(X+1)*10 + Y] == 0) {values[2] = estimates[X*10+Y][2];} else {values[2] = -9999999;}
+    if ( Y-1 >= 0 && grid[X*10 + Y - 1] == 0) {values[3] = estimates[X*10+Y][3];} else {values[3] = -9999999;}
     values[4] = estimates[X*10 + Y][4];
 
     for (int i=0; i<5; i++) {
@@ -205,10 +205,9 @@ int Agent::UCB(double exploreDegree, std::vector<int> grid) {
             if (checkForWall(i, grid)) { return i;}
         }
 
-        rewardUCB = estimates[X*10 + Y][i] 
+        rewardUCB = values[i] 
                 + exploreDegree 
-                * sqrt(log(counterAll) 
-                / choiceCounter[X*10 + Y][i]);
+                * sqrt(log(counterAll) / choiceCounter[X*10 + Y][i]);
 
         if (rewardUCB > maxReward) {
             maxReward = rewardUCB;
