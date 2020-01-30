@@ -19,12 +19,12 @@ class Simulation {
 
     // Hyper-parameters
     double epsilon        = 0.1; // Epsilon-Greedy
-    double alpha          = 0.1; // Learning rate for Q-learning
-    double gamma          = 0.9; // Q-learning discount factor.
+    double alpha          = 0.1; // Learning rate for SARSA
+    double gamma          = 0.9; // SARSA discount factor.
     double beta           = 0.1; // Pursuit
     double initialValue   = 5;   // Optimistic Initial Values
     double alphaExp       = 0.2; // Used as parameter for Reinforcement Comparison
-    double exploreDegree  = 2.5;   // UCB
+    double exploreDegree  = 2.5; // UCB
 
     // Experiment parameters
     int    simPerExperiment   = 500;                  // Number of simulations in an experiment run.
