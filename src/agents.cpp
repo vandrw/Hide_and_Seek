@@ -8,7 +8,11 @@ using namespace std;
 Agent::Agent(int t, int expStrategy, double initialValue) {
     exploration = expStrategy;
     type = t;                                    // Set agent type
-    direction = 4;                               // Default starting direction     
+    direction = 4;                               // Default starting direction
+
+    if (expStrategy != 1) {
+        initialValue = 0;
+    }
 
     meanRewards.resize(100, 0.0);
     estimates.resize(100);
@@ -27,7 +31,11 @@ void Agent::reinitialize(double initialValue, std::vector<int> &grid) {
     uniform_int_distribution<int> randInt(0, 9);
 
     direction = 4;                               // Default starting direction
-    counterAll = 0;   
+    counterAll = 0;
+
+    if (exploration != 1) {
+        initialValue = 0;
+    } 
 
     std::fill(meanRewards.begin(), meanRewards.end(), 0.0);
 

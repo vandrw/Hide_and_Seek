@@ -18,24 +18,24 @@ class Simulation {
     public:
 
     // Hyper-parameters
-    double epsilon        = 0.2; // Epsilon-Greedy
-    double alpha          = 0.1; // Parameter for Q-learning
-    double gamma          = 0.1; // Q-learning
+    double epsilon        = 0.1; // Epsilon-Greedy
+    double alpha          = 0.1; // Learning rate for Q-learning
+    double gamma          = 0.9; // Q-learning discount factor.
     double beta           = 0.1; // Pursuit
-    double initialValue   = 0;   // Optimistic Initial Values
-    double alphaExp       = 0.1; // Used as parameter for Reinforcement Comparison
-    double exploreDegree  = 2;   // UCB
+    double initialValue   = 5;   // Optimistic Initial Values
+    double alphaExp       = 0.2; // Used as parameter for Reinforcement Comparison
+    double exploreDegree  = 2.5;   // UCB
 
     // Experiment parameters
-    int    simPerExperiment   = 100;                  // 100  Number of simulations in an experiment run.
-    int    gamesPerSimulation = 5000;                 // 10000 Number of games in a simulation.
-    int    turnsPerGame       = 200;                 // 200   Number of turns in a Game.
+    int    simPerExperiment   = 500;                  // Number of simulations in an experiment run.
+    int    gamesPerSimulation = 1500;                 // Number of games in a simulation.
+    int    turnsPerGame       = 200;                  // Number of turns in a Game.
     int    hiderAdvantage     = 50;
 
     std::vector<int>    grid;                         // The grid where the agents play.
     std::vector<double> rewardsSeeker;                // Rewards for seeker in the grid.
     std::vector<double> rewardsHider;                 // Rewards for hider in the grid.
-    std::vector<double> rewardsToBaseHider;                // Rewards that indicate the path to the base.
+    std::vector<double> rewardsToBaseHider;           // Rewards that indicate the path to the base.
     std::vector<double> rewardsToBaseSeeker;
 
     // Current iteration
