@@ -7,14 +7,17 @@
 
 using namespace std;
 
-// Whole experiment is for X simulations
-// Simulation has 100 games with the same starting location and hider seeker observations
-// Each game has 300 turns
-
 int main(int argc, char **argv) {
      Simulation sim;
 
-     sim.makeExperiment();
+     int hiderExpl = 0, seekerExpl = 0;
+
+     if (argc == 3) {
+          hiderExpl = atoi(argv[1]);
+          seekerExpl = atoi(argv[2]);
+     }
+
+     sim.makeExperiment(hiderExpl, seekerExpl);
 
      return 0;
 }

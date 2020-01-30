@@ -1,38 +1,24 @@
 #include <iostream>
 #include <fstream>
 
+#include <string>
 #include <random>
 #include <vector>
 #include <thread>
 #include <chrono>
+
 #include "agents.h"
 #include "grid.h"
 #include "simulation.h"
 
 using namespace std;
 
-void Simulation::makeExperiment() {
+void Simulation::makeExperiment(int hiderStrat, int seekerStrat) {
     ofstream logs;
 
-    logs.open ("data/logs.csv", std::ofstream::out | ios::trunc);
-    logs <<"Simulation,Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
-
-    experimentResults eRes;
-    adjustSize(eRes);
-
-    for (int i=0; i < simPerExperiment; i++) {
-        simNum++;
-        makeSimulation(logs, eRes);
-    }
-
-    printExperimentResults(eRes);
-
-    logs.close();
-}
-
-
-void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
-    gameResults gRes;
+    // Initializing agent and environment vectors.
+    Agent  hider(0, hiderStrat, initialValue);
+    Agent seeker(1, seekerStrat, initialValue);
 
     rewardsSeeker.resize(100, 0.0);
     rewardsHider.resize(100, 0.0);
@@ -40,13 +26,33 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
     rewardsToBaseHider.resize(100, 0.0);
     grid.resize(100, 0);
 
+    printCurrentExperiment(hiderStrat, seekerStrat);
+
+    createLogs(logs, hiderStrat, seekerStrat);
+
+    for (int i=0; i < simPerExperiment; i++) {
+        simNum++;
+        makeSimulation(hider, seeker, logs);
+    }
+
+    logs.close();
+}
+
+
+void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs) {
+    gameResults gRes;
+
+    std::fill(rewardsSeeker.begin(), rewardsSeeker.end(), 0.0);
+    std::fill(rewardsHider.begin(), rewardsHider.end(), 0.0);
+    std::fill(rewardsToBaseSeeker.begin(), rewardsToBaseSeeker.end(), 0.0);
+    std::fill(rewardsToBaseHider.begin(), rewardsToBaseHider.end(), 0.0);
+
+    hider.reinitialize(initialValue, grid);
+    seeker.reinitialize(initialValue, grid);
+
     initializeZerosArray(rewardsSeeker);
     initializeGrid(grid);
     initializeRewardsGrid(rewardsHider);
-    // initializeRewardsGrid(rewardsSeeker);
-
-    Agent  hider(0, hiderExploration, initialValue, grid);
-    Agent seeker(1, seekerExploration, initialValue, grid);
 
     int baseX  = seeker.getX_Coord();
     int baseY  = seeker.getY_Coord();
@@ -60,8 +66,6 @@ void Simulation::makeSimulation(std::ofstream& logs, experimentResults &eRes) {
         gameNum++;
 
         gRes = makeGame(hider, seeker);
-
-        transferGameResults(gRes, eRes, i);
 
         printScoresPerSimulation(logs, gRes);
 
@@ -113,15 +117,15 @@ gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
         }
 
         if (turn < hiderAdvantage){
-            hider.playTurn(beta, epsilon, grid);
+            hider.playTurn(beta, epsilon, exploreDegree, grid);
             reward = hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardHider += reward;
-            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, grid);
+            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
             continue;
         }
 
-        hider.playTurn(beta, epsilon, grid);
-        hiderDiscover  = seeker.playTurn(beta, epsilon, grid);
+        hider.playTurn(beta, epsilon, exploreDegree, grid);
+        hiderDiscover  = seeker.playTurn(beta, epsilon, exploreDegree, grid);
 
         if (hiderDiscover == 1 && gRes.hiderFoundTurn == 0){
             gRes.hiderFoundTurn = turn;
@@ -134,27 +138,28 @@ gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
             
             reward = seeker.getReward(rewardsSeeker, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardSeeker += reward;
-            seeker.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, grid);
+            seeker.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
 
             reward = hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardHider += reward;
-            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, grid);
+            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
 
         } else {
 
             reward = seeker.getReward(rewardsToBaseSeeker, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardSeeker += reward;
-            seeker.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, grid);
+            seeker.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
 
             reward = hider.getReward(rewardsToBaseHider, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardHider += reward;
-            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, grid);
+            hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
 
         }
 
         // if(gameNum % 100 == 0){
         //     printSimulation(hider, seeker, gRes.hiderFound, baseX, baseY);
         // }
+
         // reduce seeker's reward for going back to the same spots to encourage exploration
         if (seeker.discovered == 0){
             rewardsSeeker[seeker.X*10 + seeker.Y] -= 1;
@@ -162,13 +167,6 @@ gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
             rewardsToBaseHider[hider.X*10 + hider.Y] -= 1;
             rewardsToBaseSeeker[seeker.X*10 + seeker.Y] -=1;
         }
-        // stop the game when the hider is found (until it works better)
-        // if (hider.discovered == 1){
-        //     gRes.wonBySeeker = 1;
-        //     gRes.endTurn = turn;
-        //     return gRes;
-        // }
-
     }
 
     turnNum = 0;
@@ -222,41 +220,57 @@ void Simulation::printScoresPerSimulation(std::ofstream& logs, gameResults gRes)
     logs << "\n";
 }
 
-void Simulation::adjustSize(experimentResults &eRes){
-    eRes.endTurns.resize(gamesPerSimulation,0.0);
-    eRes.hiderFoundTurn.resize(gamesPerSimulation,0.0);
-    eRes.hiderFound.resize(gamesPerSimulation,0.0);
-    eRes.hiderRewards.resize(gamesPerSimulation,0.0);
-    eRes.seekerRewards.resize(gamesPerSimulation,0.0);
-    eRes.seekerWins.resize(gamesPerSimulation,0.0);
-}
+void Simulation::createLogs(std::ofstream& logs, int hiderStrat, int seekerStrat) {
+    string filename;
 
-void Simulation::transferGameResults(gameResults gRes, experimentResults &eRes, int i){
-    eRes.endTurns[i] += gRes.endTurn;
-    eRes.hiderFound[i] += gRes.hiderFound;
-    if(gRes.hiderFoundTurn != -1){ 
-        eRes.hiderFoundTurn[i] += gRes.hiderFoundTurn;
-    }else {
-        eRes.hiderFoundTurn[i] += turnsPerGame;
-    }
-    eRes.hiderRewards[i] += gRes.totalRewardHider;
-    eRes.seekerRewards[i] += gRes.totalRewardSeeker;
-    eRes.seekerWins[i] += gRes.wonBySeeker;
-}
+    filename.append("data/");
 
-void Simulation::printExperimentResults(experimentResults eRes){
-    ofstream experiment;
-    experiment.open("data/experiment.csv", std::ofstream::out | ios::trunc);
-    experiment <<"Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
-    
-    for (int i = 0; i<gamesPerSimulation; i++){
-        experiment  << i << "," << eRes.endTurns[i]/simPerExperiment << "," 
-                    << eRes.hiderFound[i]/simPerExperiment << "," 
-                    << eRes.hiderFoundTurn[i]/simPerExperiment << ","
-                    << eRes.seekerWins[i]/simPerExperiment << ","
-                    << eRes.hiderRewards[i]/(simPerExperiment*eRes.endTurns[i]) << ","
-                    << eRes.seekerRewards[i]/(simPerExperiment*(eRes.endTurns[i]-50)) <<"\n";              
+    switch (hiderStrat) {
+        case 0: { filename.append("Random/Random_"); break; }
+        case 1: { filename.append("Optimistic/OptimisticInit_"); break; }
+        case 2: { filename.append("Epsilon/EpsilonGreedy_"); break; }
+        case 3: { filename.append("Reinf/Reinforcement_"); break; }
+        case 4: { filename.append("Pursuit/Pursuit_"); break; }
+        case 5: { filename.append("UCB/UCB_"); break; }
     }
 
-    experiment.close();
+    filename.append("vs_");
+
+    switch (seekerStrat) {
+        case 0: { filename.append("Random"); break; }
+        case 1: { filename.append("OptimisticInit"); break; }
+        case 2: { filename.append("EpsilonGreedy"); break; }
+        case 3: { filename.append("Reinforcement"); break; }
+        case 4: { filename.append("Pursuit"); break; }
+        case 5: { filename.append("UCB"); break; }
+    }
+
+    logs.open(filename + ".csv", std::ofstream::out | ios::trunc);
+
+    logs <<"Simulation,Game,End Turn,Hider Discovered,Hider Found Turn,Seeker Won,Average Reward Hider,Average Reward Seeker\n";
+}
+
+void Simulation::printCurrentExperiment(int hiderStrat, int seekerStrat) {
+
+    switch (hiderStrat) {
+        case 0: { cout << "Random Hider"; break; }
+        case 1: { cout << "Optimistic Hider"; break; }
+        case 2: { cout << "Epsilon Greedy Hider"; break; }
+        case 3: { cout << "Reinforcement Comparison Hider"; break; }
+        case 4: { cout << "Pursuit Hider"; break; }
+        case 5: { cout << "UCB Hider"; break; }
+    }
+
+    cout << " vs ";
+
+    switch (seekerStrat) {
+        case 0: { cout << "Random Seeker"; break; }
+        case 1: { cout << "Optimistic Seeker"; break; }
+        case 2: { cout << "Epsilon Greedy Seeker"; break; }
+        case 3: { cout << "Reinforcement Comparison Seeker"; break; }
+        case 4: { cout << "Pursuit Seeker"; break; }
+        case 5: { cout << "UCB Seeker"; break; }
+    }
+
+    cout << "\n";
 }

@@ -83,7 +83,7 @@ void initializeRewardsToBase(std::vector<double> &rewardsToBase, int baseX, int 
             rewardsToBase[i*10+j] = (double)(18 - (abs(baseX-i) + abs(baseY-j)))/6;
             // for getting to the base first the reward is 10
             if ( i == baseX && j == baseY){
-                rewardsToBase[i*10+j] = 10;
+                rewardsToBase[i*10+j] = 50;
             }
         }
     }

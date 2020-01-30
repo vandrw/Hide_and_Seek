@@ -10,85 +10,88 @@ import os
 plt.rcParams["figure.figsize"] = [12,10]
 plt.rcParams.update({'font.size': 22})
 
-filename = "logs.csv"
+allFiles = os.listdir("data")
+allFiles.remove(".gitkeep")
 
-data = pd.read_csv("data/" + filename)
+for filename in allFiles:
 
-dataByGame = data.groupby("Game", axis=0)
+    data = pd.read_csv("data/" + filename)
 
-plotRew = plt.figure(1)
+    dataByGame = data.groupby("Game", axis=0)
 
-meanDataHider = dataByGame["Average Reward Hider"].mean()
-meanDataSeeker = dataByGame["Average Reward Seeker"].mean()
+    plotRew = plt.figure(1)
 
-plt.plot(meanDataHider, label="Hider")
-plt.plot(meanDataSeeker, label="Seeker")
+    meanDataHider = dataByGame["Average Reward Hider"].mean()
+    meanDataSeeker = dataByGame["Average Reward Seeker"].mean()
 
-plt.title("Mean Rewards Obtained by the Agents")
-plt.xlabel("Game")
-plt.ylabel("Average reward") 
+    plt.plot(meanDataHider, label="Hider")
+    plt.plot(meanDataSeeker, label="Seeker")
 
-
-plt.grid()
-plt.legend()
-
-plt.savefig('docs/rewards.png')
-
-plotWins = plt.figure(2)
-
-meanWins = dataByGame["Seeker Won"].mean()
-
-plt.plot(meanWins)
-
-plt.title("Mean Win of Seeker per game")
-plt.xlabel("Game")
-plt.ylabel("Win rate (%)")
-
-plt.grid()
-
-plt.savefig("docs/wins.png")
-
-plotEndTurn = plt.figure(3)
-
-meanEndTurn = dataByGame["End Turn"].mean()
-
-plt.plot(meanEndTurn)
-
-plt.title("Mean End Turn per Game")
-plt.xlabel("Game")
-plt.ylabel("End Turn")
-
-plt.grid()
-
-plt.savefig("docs/endturn.png")
-
-plotEndTurn = plt.figure(4)
-
-meanEndTurn = dataByGame["Hider Discovered"].mean()
-
-plt.plot(meanEndTurn)
-
-plt.title("Mean Discovery of Hider per Game")
-plt.xlabel("Game")
-plt.ylabel("Discovery rate (%)")
-
-plt.grid()
-
-plt.savefig("docs/hiderdisc.png")
-
-plotEndTurn = plt.figure(5)
-
-# hiderFoundGames = sum(dataByGame['Hider Found Turn'] == "1")
-# meanEndTurn = dataByGame["Hider Found Turn"].sum()/hiderFoundGames
+    plt.title("Mean Rewards Obtained by the Agents")
+    plt.xlabel("Game")
+    plt.ylabel("Average reward") 
 
 
-meanEndTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean() 
-plt.plot(meanEndTurn)
+    plt.grid()
+    plt.legend()
 
-plt.title("Mean Turn of Hider Found per Game")
-plt.xlabel("Game")
-plt.ylabel("Turn of Hider Found")
+    plt.savefig('docs/rewards.png')
 
-plt.grid()
+    plotWins = plt.figure(2)
 
-plt.savefig("docs/foundturn.png")
+    meanWins = dataByGame["Seeker Won"].mean()
+
+    plt.plot(meanWins)
+
+    plt.title("Mean Win of Seeker per game")
+    plt.xlabel("Game")
+    plt.ylabel("Win rate (%)")
+
+    plt.grid()
+
+    plt.savefig("docs/wins.png")
+
+    plotEndTurn = plt.figure(3)
+
+    meanEndTurn = dataByGame["End Turn"].mean()
+
+    plt.plot(meanEndTurn)
+
+    plt.title("Mean End Turn per Game")
+    plt.xlabel("Game")
+    plt.ylabel("End Turn")
+
+    plt.grid()
+
+    plt.savefig("docs/endturn.png")
+
+    plotEndTurn = plt.figure(4)
+
+    meanEndTurn = dataByGame["Hider Discovered"].mean()
+
+    plt.plot(meanEndTurn)
+
+    plt.title("Mean Discovery of Hider per Game")
+    plt.xlabel("Game")
+    plt.ylabel("Discovery rate (%)")
+
+    plt.grid()
+
+    plt.savefig("docs/hiderdisc.png")
+
+    plotEndTurn = plt.figure(5)
+
+    # hiderFoundGames = sum(dataByGame['Hider Found Turn'] == "1")
+    # meanEndTurn = dataByGame["Hider Found Turn"].sum()/hiderFoundGames
+
+
+    meanEndTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean() 
+    plt.plot(meanEndTurn)
+
+    plt.title("Mean Turn of Hider Found per Game")
+    plt.xlabel("Game")
+    plt.ylabel("Turn of Hider Found")
+
+    plt.grid()
+
+    plt.savefig("docs/foundturn.png")

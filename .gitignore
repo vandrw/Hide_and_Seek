@@ -6,6 +6,10 @@ build/*
 data/*
 !data/.gitkeep
 
+!data/*/
+data/*/*
+!data/*/.gitkeep
+
 # Ignore images
 docs/*.png
 
