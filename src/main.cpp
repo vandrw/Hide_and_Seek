@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char **argv) {
      Simulation sim;
 
-     int hiderExpl = 0, seekerExpl = 0;
+     int hiderExpl = 3, seekerExpl = 2;
 
      if (argc == 3) {
           hiderExpl = atoi(argv[1]);

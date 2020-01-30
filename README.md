@@ -1,18 +1,5 @@
 # Hide and Seek
-This project creates a competitive multi-agent environment, where 2 players in each team act on a 32x32 grid.
-
-## To Do
-- [x] Implement a field of view for the seeker (and possibly the hider)
-- [x] look around (explore), move (exploit)
-- [x] Have the seeker and the hider spawn at a random position, with a distance higher than the vision range
-- [x] if seeker finds hider, rush back to start
-- [ ] increase maze 
-- [x] see first reward in front (exploit by going forward)
-- [x] prints to file rewards for each agent per turn, winner of a game, end turn, turn when hider is found
-- [ ] hider gets the go-to-base reward from the beginning (? mayyybe)
-- [ ] print average reward per turn over multiple games for each agent
-- [ ] prints how many times each agent (type) won
-- [ ] prints end turn for every game & turn when hider was found
+This project creates a competitive multi-agent environment where 2 players in each team act on a 10x10 grid.
 
 ## How to Run
 To run the code, go to a terminal, set the present working directory as K-armed_Bandits and run the following commands:
@@ -20,6 +7,28 @@ To run the code, go to a terminal, set the present working directory as K-armed_
 ```
 make
 make run
+```
+
+In case you would like to analyze the data further, you can run `make all` to create graphs. This requires at least Python 3.7, along with the modules NumPy, Pandas, and Matplotlib. To create only the graphs, you can run `make graph`.
+
+If you desire to set the exploration strategy of each agent, you can run the following command:
+```
+make run ARGS="[0-5] [0-5]"
+```
+This will create an experiment where the exploration strategies of the hider and, respectively, the seeker are set to a number found in the interval 0 to 5 (including 0 and 5).
+
+The strategies are numbered as follows:
+
+0. Random
+1. Optimistic Initial Values
+2. $\epsilon$-Greedy
+3. Reinforcement Comparison
+4. Pursuit Methods
+5. Upper-Confidence-Bound
+
+To create an experiment that features a Random hider and a seeker that uses Pursuit Methods, run the following command:
+```
+make run ARGS="0 4"
 ```
 
 ## Project Structure

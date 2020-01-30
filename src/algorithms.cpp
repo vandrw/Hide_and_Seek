@@ -19,7 +19,7 @@ int Agent::decide(double beta, double epsilon, double exploreDegree, std::vector
             return epsilonGreedy(epsilon, grid);
         case 3:    // Reinforcement Comparison
             return reinforcementComparison(grid);
-        case 4:    // Pursut
+        case 4:    // Pursuit
             return pursuit(beta, grid);
         case 5:    // UCB
             return UCB(exploreDegree, grid);
