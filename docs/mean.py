@@ -25,7 +25,7 @@ for folder in allFolders:
         meanDataHider = dataByGame["Average Reward Hider"].mean()
         meanDataSeeker = dataByGame["Average Reward Seeker"].mean()
         meanTurn = dataByGame["End Turn"].mean()
-        hiderTurn = dataByGame["Hider Found Turn"].mean()
+        hiderTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean()
         winRate = dataByGame["Seeker Won"].mean()
         discoveryRate = dataByGame["Hider Discovered"].mean()
 
