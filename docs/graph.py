@@ -37,42 +37,42 @@ for folder in allFolders:
         hiderStrat = filename.split("_")[0]
         seekerStrat = filename.split("_")[2].split(".")[0]
         
-        ax1.plot(meanDataHider, label= hiderStrat, alpha=0.7)
-        ax2.plot(meanDataSeeker, label= seekerStrat, alpha=0.7)
+        ax1.plot(meanDataHider, label= hiderStrat, alpha=0.7, linewidth=10.0)
+        ax2.plot(meanDataSeeker, label= seekerStrat, alpha=0.7, linewidth=10.0)
 
         # Mean Win
         plt.figure(2)
 
         meanWins = dataByGame["Seeker Won"].mean()
 
-        plt.plot(meanWins, label= hiderStrat, alpha=0.7)
+        plt.plot(meanWins, label= hiderStrat, alpha=0.7, linewidth=10.0)
 
         # Mean End Turn
         plt.figure(3)
 
         meanEndTurn = dataByGame["End Turn"].mean()
 
-        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7)
+        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7, linewidth=10.0)
 
         # Hider Discovered
         plt.figure(4)
         
         meanEndTurn = dataByGame["Hider Discovered"].mean()
 
-        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7)
+        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7, linewidth=10.0)
 
         # Hider Found
         plt.figure(5)
 
         meanEndTurn = data.replace(0, np.NaN).groupby("Game")["Hider Found Turn"].mean() 
-        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7)
+        plt.plot(meanEndTurn, label= hiderStrat, alpha=0.7, linewidth=10.0)
         
 # ---------------------       
 plt.figure(1)
 ax1.set_title("Mean Rewards Obtained by Hider")
 ax1.set_ylabel("Average reward") 
 ax1.legend(bbox_to_anchor=(0,1.02, 1, 0.2), loc="lower left",
-           mode="expand", borderaxespad=2, handlelength=1, ncol=5)
+           mode="expand", borderaxespad=2, handlelength=0.4, ncol=6)
 ax1.grid()
 
 ax2.set_title("Mean Rewards Obtained by Seeker")
@@ -91,7 +91,7 @@ plt.xlabel("Game")
 plt.ylabel("Win rate (%)")
 
 plt.legend(bbox_to_anchor=(0,1.02, 1, 0.2), loc="lower left",
-           mode="expand", borderaxespad=2, handlelength=1, ncol=5)
+           mode="expand", borderaxespad=2, handlelength=0.4, ncol=5)
 
 plt.grid()
 plt.subplots_adjust(top=0.7)
@@ -104,7 +104,7 @@ plt.xlabel("Game")
 plt.ylabel("End Turn")
 
 plt.legend(bbox_to_anchor=(0,1.02, 1, 0.2), loc="lower left",
-           mode="expand", borderaxespad=2, handlelength=1, ncol=5)
+           mode="expand", borderaxespad=2, handlelength=0.4, ncol=5)
 
 plt.grid()
 plt.subplots_adjust(top=0.7)
@@ -118,7 +118,7 @@ plt.xlabel("Game")
 plt.ylabel("Discovery rate (%)")
 
 plt.legend(bbox_to_anchor=(0,1.02, 1, 0.2), loc="lower left",
-           mode="expand", borderaxespad=2, handlelength=1, ncol=5)
+           mode="expand", borderaxespad=2, handlelength=0.4, ncol=5)
 
 plt.grid()
 plt.subplots_adjust(top=0.7)
@@ -132,7 +132,7 @@ plt.xlabel("Game")
 plt.ylabel("Turn of Hider Found")
 
 plt.legend(bbox_to_anchor=(0,1.02, 1, 0.2), loc="lower left",
-           mode="expand", borderaxespad=2, handlelength=1, ncol=5)
+           mode="expand", borderaxespad=2, handlelength=0.4, ncol=5)
 plt.grid()
 plt.subplots_adjust(top=0.7)
 plt.savefig("docs/foundturn.png", bbox_inches="tight")
