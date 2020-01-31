@@ -2,13 +2,13 @@
 This project creates a competitive multi-agent environment where 2 players in each team act on a 10x10 grid.
 
 ## How to Run
-To run the code, go to a terminal, set the present working directory as K-armed_Bandits and run the following commands:
+To run the code, go to a terminal, set the present working directory as Hide_and_Seek and run the following commands:
 
 ```
 make run
 ```
 
-In case you would like to analyze the data further, you can run `make all` to create graphs. This requires at least Python 3.7, along with the modules NumPy, Pandas, and Matplotlib. To create only the graphs, you can run `make graph`.
+In case you would like to analyze the data further, you can run `make all` to create graphs. This requires at least Python 3.7, along with the modules NumPy, Pandas, and Matplotlib. To create only the graphs, you can run `make graph`. The raw data can be found in csv files, in each strategy folder from the data folder.
 
 If you desire to set the exploration strategy of each agent, you can run the following command:
 ```
