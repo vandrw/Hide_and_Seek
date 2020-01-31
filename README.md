@@ -30,7 +30,7 @@ To create an experiment that features a Random hider and a seeker that uses Purs
 make run ARGS="0 4"
 ```
 
-Finally, there is a way to observe what the agents are doing! By running `make pretty`, you can view the grid and how the agents move in it. If you desire to choose a different set of exploration strategies, you can run the command `make run ARGS="[0-5] [0-5] print"`.
+Finally, there is a way to observe what the agents are doing! By running `make pretty`, you can view the grid and how the agents move in it. If you desire to choose a different set of exploration strategies, you can run the command `make run ARGS="[0-5] [0-5] print"`. This command will print every 100th game.
 
 ## Project Structure
 * __bin__: The output executables will appear here.
