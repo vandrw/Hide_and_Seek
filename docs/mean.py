@@ -24,6 +24,14 @@ for folder in allFolders:
         
         meanDataHider = dataByGame["Average Reward Hider"].mean()
         meanDataSeeker = dataByGame["Average Reward Seeker"].mean()
-        
+        meanTurn = dataByGame["End Turn"].mean()
+        hiderTurn = dataByGame["Hider Found Turn"].mean()
+        winRate = dataByGame["Seeker Won"].mean()
+        discoveryRate = dataByGame["Hider Discovered"].mean()
+
         print(algorithmHider, " Hider (", round(meanDataHider.loc[size - 100: size].mean(), 4), ") vs ",
-            algorithmSeeker, " Seeker (", round(meanDataSeeker.loc[size - 100: size].mean(), 4), ")")
+            algorithmSeeker, " Seeker (", round(meanDataSeeker.loc[size - 100: size].mean(), 4), ") ", 
+            " End  Turn: ", round(meanTurn.loc[size - 100: size].mean(), 4), " ",
+            " Hider Found Turn: ", round(hiderTurn.loc[size - 100: size].mean(), 4), " " ,
+            " Seeker Won: ", round(winRate.loc[size - 100: size].mean(), 4), " ",  
+            " Hider Discovered ", round(discoveryRate.loc[size - 100: size].mean(), 4), " \n" ) 
