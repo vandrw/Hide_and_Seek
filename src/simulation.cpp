@@ -13,7 +13,7 @@
 
 using namespace std;
 
-void Simulation::makeExperiment(int hiderStrat, int seekerStrat) {
+void Simulation::makeExperiment(int hiderStrat, int seekerStrat, int print) {
     ofstream logs;
 
     // Initializing agent and environment vectors.
@@ -32,14 +32,14 @@ void Simulation::makeExperiment(int hiderStrat, int seekerStrat) {
 
     for (int i=0; i < simPerExperiment; i++) {
         simNum++;
-        makeSimulation(hider, seeker, logs);
+        makeSimulation(hider, seeker, logs, print);
     }
 
     logs.close();
 }
 
 
-void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs) {
+void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs, int print) {
     gameResults gRes;
 
     std::fill(rewardsSeeker.begin(), rewardsSeeker.end(), 0.0);
@@ -47,12 +47,12 @@ void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs) 
     std::fill(rewardsToBaseSeeker.begin(), rewardsToBaseSeeker.end(), 0.0);
     std::fill(rewardsToBaseHider.begin(), rewardsToBaseHider.end(), 0.0);
 
-    hider.reinitialize(initialValue, grid);
-    seeker.reinitialize(initialValue, grid);
-
     initializeZerosArray(rewardsSeeker);
     initializeGrid(grid);
     initializeRewardsGrid(rewardsHider);
+
+    hider.reinitialize(initialValue, grid);
+    seeker.reinitialize(initialValue, grid);
 
     int baseX  = seeker.getX_Coord();
     int baseY  = seeker.getY_Coord();
@@ -65,12 +65,15 @@ void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs) 
     for (int i = 0; i < gamesPerSimulation; i ++ ) {
         gameNum++;
 
-        gRes = makeGame(hider, seeker);
+        gRes = makeGame(hider, seeker, print);
 
         printScoresPerSimulation(logs, gRes);
 
         // (Re-)set starting locations, grid & scores for next game
         initializeGrid(grid);
+
+        grid[hiderX*10 + hiderY] = 2;
+        grid[baseX*10 + baseY] = 3;
 
         hider.setX_Coord(hiderX);
         hider.setY_Coord(hiderY);
@@ -91,7 +94,7 @@ void Simulation::makeSimulation(Agent hider, Agent seeker, std::ofstream& logs) 
     
 }
 
-gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
+gameResults Simulation::makeGame( Agent &hider, Agent &seeker, int print) {
     gameResults gRes;
 
     int hiderDiscover = 0;
@@ -121,6 +124,13 @@ gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
             reward = hider.getReward(rewardsHider, turn, gRes.hiderFoundTurn, turnsPerGame);
             gRes.totalRewardHider += reward;
             hider.updateEstimates(reward, alpha, gamma, epsilon, alphaExp, beta, exploreDegree, grid);
+
+            if (print == 1) {
+                if(gameNum % 100 == 0){
+                    printSimulation(hider, seeker, gRes.hiderFound, baseX, baseY);
+                }
+            }
+
             continue;
         }
 
@@ -156,9 +166,11 @@ gameResults Simulation::makeGame( Agent &hider, Agent &seeker) {
 
         }
 
-        // if(gameNum % 100 == 0){
-        //     printSimulation(hider, seeker, gRes.hiderFound, baseX, baseY);
-        // }
+        if (print == 1) {
+            if(gameNum % 100 == 0){
+                printSimulation(hider, seeker, gRes.hiderFound, baseX, baseY);
+            }
+        }
 
         // reduce seeker's reward for going back to the same spots to encourage exploration
         if (seeker.discovered == 0){
@@ -189,7 +201,9 @@ void Simulation::printSimulation(Agent hider, Agent seeker, int hiderFound, int 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     system("clear");
 
-    cout << "Simulation " << simNum <<"\n";
+    printCurrentExperiment(hider.exploration, seeker.exploration);
+
+    cout << "\nSimulation " << simNum <<"\n";
 
     printGrid(grid, hider, seeker, baseX, baseY);
 

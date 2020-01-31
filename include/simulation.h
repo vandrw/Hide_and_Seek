@@ -43,9 +43,9 @@ class Simulation {
     int gameNum = 0;
     int turnNum = 0;
 
-    void makeExperiment(int hiderStrat, int seekerStrat);
-    void makeSimulation(Agent hider, Agent seeker, std::ofstream& logs);
-    gameResults  makeGame(Agent &hider, Agent &seeker);
+    void makeExperiment(int hiderStrat, int seekerStrat, int print);
+    void makeSimulation(Agent hider, Agent seeker, std::ofstream& logs, int print);
+    gameResults  makeGame(Agent &hider, Agent &seeker, int print);
 
     void printSimulation(Agent hider, Agent seeker, int hiderFound, int baseX, int baseY);
     void printScoresPerSimulation(std::ofstream& logs, gameResults gRes);

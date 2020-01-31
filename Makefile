@@ -17,13 +17,20 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
+pretty:
+	@$(MAKE) -s;
+	@clear;
+	@echo "Printing a full run..."
+	@$(MAKE) -s run ARGS="3 4 print";
+
 clean:
-	@echo " Cleaning..."; 
+	@echo "Cleaning..."; 
 	@$(RM) -r $(BUILDDIR)/* $(TARGET)/* docs/*.png;
 	@find data/ -maxdepth 2 -type f ! -name '.gitkeep' -delete
 
 run:
-	@clear
+	@$(MAKE) -s;
+	@clear;
 	@echo "Running the file...\n";
 	@$(TARGET)/$(OUTPUT) $(ARGS)
 
